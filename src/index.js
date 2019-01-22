@@ -4,16 +4,16 @@ document.addEventListener('DOMContentLoaded', function() {
     getAllVideos().then(videos => {
 
       const mod1Videos = videos.filter(video => video.category === 'Mod 1')
-      mod1Videos.forEach(video => renderVideo(video, 'mod1Tab'))
+      mod1Videos.forEach(video => renderVideo2(video, 'mod1Tab'))
 
       const mod2Videos = videos.filter(video => video.category === 'Mod 2')
-      mod2Videos.forEach(video => renderVideo(video, 'mod2Tab'))
+      mod2Videos.forEach(video => renderVideo2(video, 'mod2Tab'))
 
       const mod3Videos = videos.filter(video => video.category === 'Mod 3')
-      mod3Videos.forEach(video => renderVideo(video, 'mod3Tab'))
+      mod3Videos.forEach(video => renderVideo2(video, 'mod3Tab'))
 
       const mod4Videos = videos.filter(video => video.category === 'Mod 4')
-      mod4Videos.forEach(video => renderVideo(video, 'mod4Tab'))
+      mod4Videos.forEach(video => renderVideo2(video, 'mod4Tab'))
     })
 }
 
@@ -31,7 +31,7 @@ function videoLoaded (){
 
       player.playVideo();
       clearInterval(interval);
-  } 
+  }
 }
 
 })
@@ -49,9 +49,10 @@ function renderVideo(video, tabId){
   vidCard.id = `vid-card-${video.id}`
   vidCard.classList.add('vid-card', 'vid-center')
   modContainer.append(vidCard)
-  
+  // vidCard.addEventListener('hover', turnGrey)
+
   vidName = document.createElement('h3')
-  vidName.innerText = video.name
+  vidName.innerText = `${video.name} (${video.instructor})`
   vidCard.appendChild(vidName)
 
   vidCardIFrame = document.createElement('div')
@@ -67,5 +68,30 @@ function renderVideo(video, tabId){
       //'onStateChange': onPlayerStateChange
     }
   });
+}
+
+
+function renderVideo2(video, tabId){
+  const modContainer = document.querySelector(`#${tabId}`);
+
+  vidCard = document.createElement('div')
+  vidCard.id = `vid-card-${video.id}`
+  vidCard.classList.add('vid-preview-card')
+  modContainer.appendChild(vidCard)
+
+  vidImg = document.createElement('img')
+  vidImg.src = `https://img.youtube.com/vi/${video.youtube_id}/1.jpg`
+  vidCard.appendChild(vidImg)
+
+  vidTitle = document.createElement('div')
+  vidTitle.classList.add('vid-title')
+  vidTitle.innerText = video.name
+  vidCard.appendChild(vidTitle)
+
+  vidDetails = document.createElement('p')
+  vidDetails.innerText = `Instructor: ${video.instructor}`
+  vidCard.appendChild(vidDetails)
+
+
 }
 
