@@ -1,41 +1,68 @@
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', function() {
+  window.onYouTubeIframeAPIReady = function() {
+    console.log('ready to embed YT videos')
+    getAllVideos().then(videos => {
 
-// addHeader()
-getAllVideos()
+      const mod1Videos = videos.filter(video => video.category === 'Mod 1')
+      mod1Videos.forEach(video => renderVideo(video, 'mod1Tab'))
+
+      const mod2Videos = videos.filter(video => video.category === 'Mod 2')
+      mod2Videos.forEach(video => renderVideo(video, 'mod2Tab'))
+
+      const mod3Videos = videos.filter(video => video.category === 'Mod 3')
+      mod3Videos.forEach(video => renderVideo(video, 'mod3Tab'))
+    })
+    
+}
+
+function onPlayerReady(event) {
+  isReady = true;
+}
+
+function videoLoaded (){
+  if (isReady) {
+      console.log("ready and play")
+      poster.hide();
+      video.show();
+
+      $('body').trigger('fluidvideos');
+
+      player.playVideo();
+      clearInterval(interval);
+  } 
+}
 
 })
 
-function body(){
-  return document.body
-}
-
-function addHeader(){
-  h1 = document.createElement('h1')
-  h1.innerText = "Flatiron School LearnTube 1.0"
-  document.body.appendChild(h1)
-}
 
 function getAllVideos(){
-  fetch('http://localhost:3000/api/v1/videos')
+  return fetch('http://localhost:3000/api/v1/videos')
   .then(r => r.json())
-  .then(videos => {
-    videos.forEach(video => renderVideo(video))
-  })
 }
 
-function renderVideo(video){
+function renderVideo(video, tabId){
+  console.log(video)
+  const modContainer = document.querySelector(`#${tabId}`);
   vidCard = document.createElement('div')
   vidCard.id = `vid-card-${video.id}`
-  vidCard.classList.add('vid-card')
+  vidCard.classList.add('vid-card', 'vid-center')
+  modContainer.append(vidCard)
+  
+  vidName = document.createElement('h3')
+  vidName.innerText = video.name
+  vidCard.appendChild(vidName)
 
-    vidName = document.createElement('h2')
-    vidName.innerText = `${video.name} (${video.instructor})`
-    vidCard.appendChild(vidName)
+  vidCardIFrame = document.createElement('div')
+  vidCardIFrame.id = `vid-${video.id}`
+  vidCard.appendChild(vidCardIFrame);
 
-    vidFrame = document.createElement('iframe')
-    vidFrame.classList.add('vid-frame')
-    vidFrame.src = video.url
-    vidFrame.align = "middle"
-    vidCard.appendChild(vidFrame)
-  body().appendChild(vidCard)
+  player = new YT.Player(vidCardIFrame.id, {
+    height: '445',
+    width: '810',
+    videoId: video.youtube_id,
+    events: {
+      // 'onReady': onPlayerReady//,
+      //'onStateChange': onPlayerStateChange
+    }
+  });
 }

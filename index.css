@@ -20,7 +20,7 @@
 body {
   color: #333;
   margin: 0;
-  margin-top: 8rem;
+  /*margin-top: 8rem;*/
   margin-bottom: 30px;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
@@ -43,10 +43,23 @@ p, ol, ul, td {
 
 .vid-card {
   margin: auto;
-  width: 50%;
+  width: 100%;
 }
 
 .vid-frame {
   height: 27rem;
   width: 45rem;
+}
+
+.tab-spacer{
+  margin-top: 15px;
+}
+
+.scroll{
+  height: 90vh;
+  overflow-y: scroll; 
+}
+
+.vid-center{
+  text-align: center;
 }
