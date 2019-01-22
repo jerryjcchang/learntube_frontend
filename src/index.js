@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   window.onYouTubeIframeAPIReady = function() {
-    console.log('ready to embed YT videos')
+    // console.log('ready to embed YT videos')
     getAllVideos().then(videos => {
 
       const mod1Videos = videos.filter(video => video.category === 'Mod 1')
@@ -11,8 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
       const mod3Videos = videos.filter(video => video.category === 'Mod 3')
       mod3Videos.forEach(video => renderVideo(video, 'mod3Tab'))
+
+      const mod4Videos = videos.filter(video => video.category === 'Mod 4')
+      mod4Videos.forEach(video => renderVideo(video, 'mod4Tab'))
     })
-    
 }
 
 function onPlayerReady(event) {
@@ -66,3 +68,4 @@ function renderVideo(video, tabId){
     }
   });
 }
+
