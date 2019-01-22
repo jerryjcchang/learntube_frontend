@@ -1,0 +1,52 @@
+#page-header {
+  display: flex;
+  justify-content: center;
+  background: #13414f;
+  opacity: .8;
+  height: 4rem;
+  padding: 1rem;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+#page-header img {
+  height: auto;
+  width: auto;
+  object-fit: contain
+}
+
+body {
+  color: #333;
+  margin: 0;
+  margin-top: 8rem;
+  margin-bottom: 30px;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  background-image: url("https://i.pinimg.com/originals/2e/f2/54/2ef25428d39b940685fe41dd73173f6a.jpg");
+  background-size: cover;
+  top: 5rem;
+}
+
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* .videos-container {
+  margin: auto;
+  width: 100%;
+} */
+
+.vid-card {
+  margin: auto;
+  width: 50%;
+}
+
+.vid-frame {
+  height: 27rem;
+  width: 45rem;
+}

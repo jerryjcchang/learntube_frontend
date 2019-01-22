@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function(){
 
-addHeader()
+// addHeader()
 getAllVideos()
 
 })
@@ -27,13 +27,15 @@ function renderVideo(video){
   vidCard = document.createElement('div')
   vidCard.id = `vid-card-${video.id}`
   vidCard.classList.add('vid-card')
-  
-    vidName = document.createElement('h3')
-    vidName.innerText = video.name
+
+    vidName = document.createElement('h2')
+    vidName.innerText = `${video.name} (${video.instructor})`
     vidCard.appendChild(vidName)
 
     vidFrame = document.createElement('iframe')
+    vidFrame.classList.add('vid-frame')
     vidFrame.src = video.url
+    vidFrame.align = "middle"
     vidCard.appendChild(vidFrame)
   body().appendChild(vidCard)
 }
