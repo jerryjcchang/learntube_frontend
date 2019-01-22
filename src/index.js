@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   window.onYouTubeIframeAPIReady = function() {
     // console.log('ready to embed YT videos')
+
     getAllVideos().then(videos => {
 
       const mod1Videos = videos.filter(video => video.category === 'Mod 1')
@@ -15,7 +16,32 @@ document.addEventListener('DOMContentLoaded', function() {
       const mod4Videos = videos.filter(video => video.category === 'Mod 4')
       mod4Videos.forEach(video => renderVideo2(video, 'mod4Tab'))
     })
+
+    initModalXButton()
+    initYouTubePlayer()
 }
+
+function modal(){
+  return document.querySelector('#myModal')
+}
+
+function modalXButton(){
+  return document.getElementsByClassName("close")[0]
+}
+
+function initModalXButton(){
+  modalXButton().addEventListener('click', handleXButton)
+}
+
+function handleXButton(){
+  modal().style.display = "none"
+  document.querySelector('.modal-content').src = ''
+}
+
+function modalContent(){
+  return document.querySelector('.modal-content')
+}
+
 
 function onPlayerReady(event) {
   isReady = true;
@@ -42,33 +68,33 @@ function getAllVideos(){
   .then(r => r.json())
 }
 
-function renderVideo(video, tabId){
-  console.log(video)
-  const modContainer = document.querySelector(`#${tabId}`);
-  vidCard = document.createElement('div')
-  vidCard.id = `vid-card-${video.id}`
-  vidCard.classList.add('vid-card', 'vid-center')
-  modContainer.append(vidCard)
-  // vidCard.addEventListener('hover', turnGrey)
-
-  vidName = document.createElement('h3')
-  vidName.innerText = `${video.name} (${video.instructor})`
-  vidCard.appendChild(vidName)
-
-  vidCardIFrame = document.createElement('div')
-  vidCardIFrame.id = `vid-${video.id}`
-  vidCard.appendChild(vidCardIFrame);
-
-  player = new YT.Player(vidCardIFrame.id, {
-    height: '445',
-    width: '810',
-    videoId: video.youtube_id,
-    events: {
-      // 'onReady': onPlayerReady//,
-      //'onStateChange': onPlayerStateChange
-    }
-  });
-}
+// function renderVideo(video, tabId){
+//   console.log(video)
+//   const modContainer = document.querySelector(`#${tabId}`);
+//   vidCard = document.createElement('div')
+//   vidCard.id = `vid-card-${video.id}`
+//   vidCard.classList.add('vid-card', 'vid-center')
+//   modContainer.append(vidCard)
+//
+//
+//   vidName = document.createElement('h3')
+//   vidName.innerText = `${video.name} (${video.instructor})`
+//   vidCard.appendChild(vidName)
+//
+//   vidCardIFrame = document.createElement('div')
+//   vidCardIFrame.id = `vid-${video.id}`
+//   vidCard.appendChild(vidCardIFrame);
+//
+//   player = new YT.Player(vidCardIFrame.id, {
+//     height: '445',
+//     width: '810',
+//     videoId: video.youtube_id,
+//     events: {
+//       // 'onReady': onPlayerReady//,
+//       //'onStateChange': onPlayerStateChange
+//     }
+//   });
+// }
 
 
 function renderVideo2(video, tabId){
@@ -77,6 +103,9 @@ function renderVideo2(video, tabId){
   vidCard = document.createElement('div')
   vidCard.id = `vid-card-${video.id}`
   vidCard.classList.add('vid-preview-card')
+  vidCard.dataset.toggle = "modal"
+  vidCard.addEventListener('click', (e) => {
+    handleCardClick(video.youtube_id)})
   modContainer.appendChild(vidCard)
 
   vidImg = document.createElement('img')
@@ -95,3 +124,27 @@ function renderVideo2(video, tabId){
 
 }
 
+function handleCardClick(id){
+  let modal = document.querySelector('#myModal')
+  let modalContent = document.querySelector('.modal-content')
+  modal.style.display = "block"
+  document.querySelector('.modal-content').src = `http://www.youtube.com/embed/${id}`
+}
+
+function clearChildNodes(node){
+    while(node.firstChild){
+      node.removeChild(node.firstChild)
+    }
+}
+
+function initYouTubePlayer(){
+  player = new YT.Player(document.querySelector('.modal-content'), {
+    height: '90%',
+    width: '90%',
+    videoId: '',
+    events: {
+      // 'onReady': onPlayerReady//,
+      //'onStateChange': onPlayerStateChange
+    }
+  })
+}
