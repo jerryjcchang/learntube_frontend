@@ -42,6 +42,9 @@ function modalContent(){
   return document.querySelector('.modal-content')
 }
 
+function vidNotesDiv(){
+  return document.querySelector('.vid-notes-div')
+}
 
 function onPlayerReady(event) {
   isReady = true;
@@ -105,7 +108,7 @@ function renderVideo2(video, tabId){
   vidCard.classList.add('vid-preview-card')
   vidCard.dataset.toggle = "modal"
   vidCard.addEventListener('click', (e) => {
-    handleCardClick(video.youtube_id)})
+    handleCardClick(video)})
   modContainer.appendChild(vidCard)
 
   vidImg = document.createElement('img')
@@ -124,11 +127,12 @@ function renderVideo2(video, tabId){
 
 }
 
-function handleCardClick(id){
+function handleCardClick(video){
   let modal = document.querySelector('#myModal')
   let modalContent = document.querySelector('.modal-content')
   modal.style.display = "block"
-  document.querySelector('.modal-content').src = `http://www.youtube.com/embed/${id}`
+  document.querySelector('.modal-content').src = `http://www.youtube.com/embed/${video.youtube_id}`
+  document.querySelector('.video-header').innerText = `${video.name} (${video.instructor})`
 }
 
 function clearChildNodes(node){
@@ -139,12 +143,18 @@ function clearChildNodes(node){
 
 function initYouTubePlayer(){
   player = new YT.Player(document.querySelector('.modal-content'), {
-    height: '90%',
-    width: '90%',
-    videoId: '',
+    height: '60%',
+    width: '85%',
+    // videoId: '',
     events: {
       // 'onReady': onPlayerReady//,
       //'onStateChange': onPlayerStateChange
     }
   })
+}
+
+function initNotesForm(){
+  let notesForm = document.createElement('form')
+  notes
+  let notesInput = document.createElement('input')
 }

@@ -22,7 +22,7 @@ body {
   margin: 0;
   /*margin-top: 8rem;*/
   margin-bottom: 30px;
-  font-family: verdana, arial, helvetica, sans-serif;
+  font-family: 'Muli', sans-serif;
   font-size: 13px;
   line-height: 18px;
   /* background-image: url("https://i.pinimg.com/originals/2e/f2/54/2ef25428d39b940685fe41dd73173f6a.jpg"); */
@@ -127,7 +127,7 @@ span.psw {
 }
 
 .vid-preview-card{
-  width: 650px;
+  width: 95%;
     padding: 12px;
     overflow: hidden;
   background-color: #ffffff;
@@ -152,7 +152,7 @@ span.psw {
 
 .vid-title {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: bolder;
   margin-top: 10px;
   margin-bottom: 10px;
   vertical-align: center;
@@ -168,7 +168,7 @@ span.psw {
   left: 0;
   top: 0;
   width: 100%; /* Full width */
-  height: 100%; /* Full height */
+  height: 115%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
@@ -176,12 +176,22 @@ span.psw {
 
 /* Modal Content */
 .modal-container {
-  background-color: #fefefe;
+  border-radius: 10px;
+  background-color: #fafafa;
   margin: auto;
   padding: 20px;
-  border: 1px solid #888;
+  /* border: 1px solid #888; */
   width: 50%;
   height: 80%;
+}
+
+.video-header {
+  margin-top: 5%;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  font-size: 20px;
+  color: #323232;
+  border-bottom: 2px solid lightgrey;
 }
 
 /* The Close Button */
@@ -198,4 +208,17 @@ span.psw {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.vid-notes-div {
+  margin-top: 15px;
+  border-bottom: 2px solid lightgrey;
+  width: 50%;
+}
+
+.vid-notes-header {
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #323232;
 }
