@@ -223,7 +223,6 @@ span.psw {
   color: #323232;
 }
 
-==========
 /* Full-width input fields */
 input[type=text], input[type=password] {
   width: 100%;
@@ -342,3 +341,12 @@ span.psw {
      width: 100%;
   }
 }
+
+#inputCategory {
+  margin-top: 8px;
+}
+
+#addVideoTab {
+  margin-right: 8px
+}
+
