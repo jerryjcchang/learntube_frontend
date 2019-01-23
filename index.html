@@ -9,6 +9,7 @@
 
 
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
     <meta charset="utf-8">
     <title>LearnTube</title>
         <link rel="stylesheet" href="index.css">
@@ -43,14 +44,36 @@
 				  <div class="tab-pane fade" id="mod4Tab" role="tabpanel"></div>
 				</div>
   			</div>
-
+		      <div id="myModal" class="modal">
+		        <div class="modal-container">
+		        <span class="close">&times
+		        </span>
+		        <div class="modal-content">
+		        </div>
+		        </div>
+		      </div>
+<!-- <div class="bs-example">
+      <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">YouTube Video</h4>
+                </div>
+                <div class="modal-body">
+                    "Hello World"
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
 			<div class="col-sm-6">
 				<ul class="nav nav-tabs">
 				  <li class="nav-item">
 				    <a class="nav-link active" id="login" data-toggle="tab" role="tab" href="#loginTab">Login</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" id="addVideo" data-toggle="tab" role="tab" href="#addVideoTab">Add Video</a>
+				    <a class="nav-link d-none" id="addVideo" data-toggle="tab" role="tab" href="#addVideoTab">Add Video</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link" id="myVideo" data-toggle="tab" role="tab" href="#myVideoTab">Link</a>
@@ -62,7 +85,6 @@
 			             <div class="imgcontainer">
 			                <img src="images/ash.jpg" alt="Avatar" class="avatar">
 			               </div>
-
 			               <div class="container">
 			                 <label for="inputUsername"><b>Username</b></label>
 		                
