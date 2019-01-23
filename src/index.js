@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   window.onYouTubeIframeAPIReady = function() {
-    // console.log('ready to embed YT videos')
+    console.log('ready to embed YT videos')
 
     getAllVideos().then(videos => {
 
@@ -63,6 +63,12 @@ function vidNotesDiv(){
     }
   }
 
+  // let loginBtn = document.querySelector('form')
+  // loginBtn.addEventListener('submit',function(e){
+  //    e.preventDefault();
+  //   const username = document.querySelector('#login').value
+  //   login(username)
+  // })
   let loginForm = document.querySelector('.login-form')
   loginForm.addEventListener('submit', function(e){
     e.preventDefault();
@@ -95,12 +101,10 @@ function login(username){
   getUser(username).then(user => {
     console.log(user)
     if (user.status === 'instructor') {
-      
       console.log('is instructor')
       addVideo();   
     }
     else if (user.status === 'student'){
-      
       console.log('is student')
     }
     else {
@@ -138,6 +142,16 @@ function renderVideo2(video, tabId){
     vidDetails.innerText = `Instructor: ${video.instructor}`
     vidCard.appendChild(vidDetails)
 
+    // vidAddBtn = document.createElement('button')
+    // vidAddBtn.classList.add('vid-add-btn')
+    // vidAddBtn.id = `add-btn-${tabId.id}`
+    // vidAddBtn.innerText = 'Add to my list'
+
+    // vidAddBtn.addEventListener('click', function() {
+    //   addToMyList();
+    // })
+    // vidCard.appendChild(vidAddBtn)
+
 }
 
 
@@ -163,6 +177,9 @@ function postNewVideo(){
   })
   .then(res => res.json())
   .then(newVideo => {
+    debugger
+    // renderVideo2(newVideo, newVideo.)
+    // document.querySelector(`#vid-card-${newVideo.id}`)
     console.log(newVideo)
   })
 }
