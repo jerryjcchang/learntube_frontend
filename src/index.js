@@ -65,7 +65,6 @@ function vidNotesDiv(){
 
 })
 
-
 function getAllVideos(){
   return fetch('http://localhost:3000/api/v1/videos')
   .then(r => r.json())
@@ -82,6 +81,7 @@ function login(username){
   getUser(username).then(user => {
     document.querySelector('.welcome-div').innerText = `${user.first_name} ${user.last_name}`
     document.querySelector('.welcome-div').id = user.id
+    renderUserLikedVideos(user)
     console.log(user)
     if (user.status === 'instructor') {
 
@@ -99,6 +99,9 @@ function login(username){
   })
 }
 
+function renderUserLikedVideos(user){
+  user.videos.forEach(video => renderUserVideo(video))
+}
 
 
 
@@ -113,6 +116,7 @@ function renderVideoCard(video){
     vidCard.classList.add('vid-preview-card')
     modContainer.appendChild(vidCard)
     vidCard.dataset.toggle = "modal"
+// COMMENT BACK IN TO ENABLE MODAL //
     // vidCard.addEventListener('click', (e) => {
     //   handleCardClick(video)})
     modContainer.prepend(vidCard)
@@ -138,16 +142,16 @@ function renderVideoCard(video){
     addBtn.id = `add-btn-${video.id}`
     addBtn.innerText = 'Add to my list'
 
-    addBtn.addEventListener('click', (e) => {
-      addToMyList(video);
-    })
+    addBtn.addEventListener('click', addToMyList)
     vidAddBtn.appendChild(addBtn)
 
 }
 
-function addToMyList(video){
+function addToMyList(event){
   // debugger
-  let data = {'video_id': video.id}
+  let id = event.target.id
+  debugger
+  let data = {'video_id': id}
     let userID = document.querySelector('.welcome-div').id
     // debugger
     fetch(`http://localhost:3000/api/v1/users/${userID}/videos/add`, {
