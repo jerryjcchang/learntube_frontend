@@ -80,6 +80,8 @@ function getUser(username) {
 
 function login(username){
   getUser(username).then(user => {
+    document.querySelector('.welcome-div').innerText = `${user.first_name} ${user.last_name}`
+    document.querySelector('.welcome-div').id = user.id
     console.log(user)
     if (user.status === 'instructor') {
 
@@ -111,8 +113,8 @@ function renderVideoCard(video){
     vidCard.classList.add('vid-preview-card')
     modContainer.appendChild(vidCard)
     vidCard.dataset.toggle = "modal"
-    vidCard.addEventListener('click', (e) => {
-      handleCardClick(video)})
+    // vidCard.addEventListener('click', (e) => {
+    //   handleCardClick(video)})
     modContainer.prepend(vidCard)
 
     vidImg = document.createElement('img')
@@ -127,6 +129,55 @@ function renderVideoCard(video){
     vidDetails = document.createElement('p')
     vidDetails.innerText = `Instructor: ${video.instructor}`
     vidCard.appendChild(vidDetails)
+
+    vidAddBtn = document.createElement('div')
+    vidCard.appendChild(vidAddBtn)
+
+    addBtn = document.createElement('button')
+    addBtn.classList.add('vid-add-btn')
+    addBtn.id = `add-btn-${video.id}`
+    addBtn.innerText = 'Add to my list'
+
+    addBtn.addEventListener('click', (e) => {
+      addToMyList(video);
+    })
+    vidAddBtn.appendChild(addBtn)
+
+}
+
+function addToMyList(video){
+  // debugger
+  let data = {'video_id': video.id}
+    let userID = document.querySelector('.welcome-div').id
+    // debugger
+    fetch(`http://localhost:3000/api/v1/users/${userID}/videos/add`, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(userVideo => {
+      // debugger
+      // renderUserVideo(userVideo);
+      console.log(userVideo)
+    })
+}
+
+function renderUserVideo(userVideo){
+  console.log(userVideo)
+  const myVidTab = document.querySelector('#myVideoTab')
+
+  const myVidDiv = document.createElement('div')
+  myVidDiv.id = userVideo.id
+  myVidDiv.classList.add(`my-vid-card`)
+  myVidTab.appendChild(myVidDiv)
+
+  const myVidName = document.createElement('h3')
+  myVidName.innerText = userVideo.name
+  myVidDiv.appendChild(myVidName)
 
 }
 
