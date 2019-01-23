@@ -222,3 +222,11 @@ span.psw {
   font-weight: bold;
   color: #323232;
 }
+
+#inputCategory {
+  margin-top: 8px;
+}
+
+#addVideoTab {
+  margin-right: 8px
+}

@@ -2,21 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   window.onYouTubeIframeAPIReady = function() {
     // console.log('ready to embed YT videos')
 
-    getAllVideos().then(videos => {
-
-      const mod1Videos = videos.filter(video => video.category === 'Mod 1')
-      mod1Videos.forEach(video => renderVideo2(video, 'mod1Tab'))
-
-      const mod2Videos = videos.filter(video => video.category === 'Mod 2')
-      mod2Videos.forEach(video => renderVideo2(video, 'mod2Tab'))
-
-      const mod3Videos = videos.filter(video => video.category === 'Mod 3')
-      mod3Videos.forEach(video => renderVideo2(video, 'mod3Tab'))
-
-      const mod4Videos = videos.filter(video => video.category === 'Mod 4')
-      mod4Videos.forEach(video => renderVideo2(video, 'mod4Tab'))
-    })
-
+    getAllVideos()
     initModalXButton()
     initYouTubePlayer()
   }
@@ -83,6 +69,7 @@ function vidNotesDiv(){
 function getAllVideos(){
   return fetch('http://localhost:3000/api/v1/videos')
   .then(r => r.json())
+  .then(videos => videos.forEach(video => renderVideoCard(video)))
 }
 
 function getUser(username) {
@@ -95,12 +82,12 @@ function login(username){
   getUser(username).then(user => {
     console.log(user)
     if (user.status === 'instructor') {
-      
+
       console.log('is instructor')
-      addVideo();   
+      addVideo();
     }
     else if (user.status === 'student'){
-      
+
       console.log('is student')
     }
     else {
@@ -113,9 +100,12 @@ function login(username){
 
 
 
-function renderVideo2(video, tabId){
-  const modContainer = document.querySelector(`#${tabId}`);
-
+function renderVideoCard(video){
+  // take each video, filter by Category
+  // set tabId based on category
+  // render video divs to category
+  let modContainer = document.querySelector(`#${video.category.replace(/\s/g, '').toLowerCase()}Tab`);
+    // debugger
     vidCard = document.createElement('div')
     vidCard.id = `vid-card-${video.id}`
     vidCard.classList.add('vid-preview-card')
@@ -123,7 +113,7 @@ function renderVideo2(video, tabId){
     vidCard.dataset.toggle = "modal"
     vidCard.addEventListener('click', (e) => {
       handleCardClick(video)})
-    modContainer.appendChild(vidCard)
+    modContainer.prepend(vidCard)
 
     vidImg = document.createElement('img')
     vidImg.src = `https://img.youtube.com/vi/${video.youtube_id}/1.jpg`
@@ -148,10 +138,14 @@ function postNewVideo(){
   const vidDescription = document.getElementById('inputDescription').value
   const vidYoutubeId = document.getElementById('inputYoutube_id').value
   const vidLength = document.getElementById('inputVideoLength').value
-  const vidCatagory = document.getElementById('inputCetagory').value
+  const vidCategory = document.getElementById('inputCategory').value
 
-    let data ={ name: vidName, description: vidDescription, instructor: vidInstructor,
-              length: vidLength, category: vidCatagory, youtube_id: vidYoutubeId}
+    let data ={ name: vidName,
+                description: vidDescription,
+                instructor: vidInstructor,
+                length: vidLength,
+                category: vidCategory,
+                youtube_id: vidYoutubeId}
 
   fetch('http://localhost:3000/api/v1/videos', {
     method: 'POST',
@@ -162,51 +156,11 @@ function postNewVideo(){
     body: JSON.stringify(data)
   })
   .then(res => res.json())
-  .then(newVideo => {
-    console.log(newVideo)
-  })
+  .then(newVideo => renderVideoCard(newVideo))
 }
 
 function addVideo(){
   document.querySelector('#addVideo').classList.remove('d-none')
-  // document.querySelector('#addVideoTab').innerHTML = `<label class="font-weight-bold tab-spacer"><h3>Add Video</h3></label>
-  //             <form>
-  //             <div class="form-row">
-  //               <div class="form-group col-md-6">
-  //                 <label for="inputVideoName">Video Name</label>
-  //                 <input type="text" class="form-control" id="vidName" placeholder="Video name">
-  //               </div>
-  //               <div class="form-group col-md-6">
-  //                 <label for="inputInstructor">Instructor</label>
-  //                 <input type="text" class="form-control" id="instructor" placeholder="Instructor Name">
-  //               </div>
-  //             </div>
-  //             <div class="form-group">
-  //               <label for="inputAddress">Description</label>
-  //               <input type="text" class="form-control" id="inputDescription" placeholder="Video deiscription">
-  //             </div>
-  //             <div class="form-row">
-  //               <div class="form-group col-md-4">
-  //                 <label for="inputCity">Video ID</label>
-  //                 <input type="text" class="form-control" id="inputYoutube_id">
-  //               </div>
-  //               <div class="form-group col-md-4">
-  //                 <label for="inputZip">Length</label>
-  //                 <input type="text" class="form-control" id="inputVideoLength" placeholder="50 mins">
-  //               </div>
-  //               <div class="form-group col-md-4">
-  //                 <label for="inputCetagory">Cetagory</label>
-  //                 <select id="inputCetagory" class="form-control">
-  //                   <option selected>Choose Cetagory</option>
-  //                   <option>Mod 1</option>
-  //                   <option>Mod 2</option>
-  //                   <option>Mod 3</option>
-  //                   <option>Mod 4</option>
-  //                 </select>
-  //               </div>
-  //             </div>
-  //             <button type="submit" class="btn btn-secondary">Create Video</button>
-  //           </form>`
 }
 
 
@@ -241,4 +195,3 @@ function initNotesForm(){
   notes
   let notesInput = document.createElement('input')
 }
-
