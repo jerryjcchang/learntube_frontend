@@ -110,12 +110,19 @@ function login(username){
   })
 }
 
+
+
+
 function renderVideo2(video, tabId){
   const modContainer = document.querySelector(`#${tabId}`);
 
     vidCard = document.createElement('div')
     vidCard.id = `vid-card-${video.id}`
     vidCard.classList.add('vid-preview-card')
+    modContainer.appendChild(vidCard)
+    vidCard.dataset.toggle = "modal"
+    vidCard.addEventListener('click', (e) => {
+      handleCardClick(video)})
     modContainer.appendChild(vidCard)
 
     vidImg = document.createElement('img')
@@ -126,14 +133,6 @@ function renderVideo2(video, tabId){
     vidTitle.classList.add('vid-title')
     vidTitle.innerText = video.name
     vidCard.appendChild(vidTitle)
-
-    vidCard = document.createElement('div')
-    vidCard.id = `vid-card-${video.id}`
-    vidCard.classList.add('vid-preview-card')
-    vidCard.dataset.toggle = "modal"
-    vidCard.addEventListener('click', (e) => {
-      handleCardClick(video)})
-    modContainer.appendChild(vidCard)
 
     vidDetails = document.createElement('p')
     vidDetails.innerText = `Instructor: ${video.instructor}`
