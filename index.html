@@ -47,31 +47,74 @@
 			<div class="col-sm-6">
 				<ul class="nav nav-tabs">
 				  <li class="nav-item">
-				    <a class="nav-link active" id="Login" data-toggle="tab" role="tab" href="#loginTab">Login</a>
+				    <a class="nav-link active" id="login" data-toggle="tab" role="tab" href="#loginTab">Login</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" id="mod-1" data-toggle="tab" role="tab" href="#fevorite">My Fav</a>
+				    <a class="nav-link" id="addVideo" data-toggle="tab" role="tab" href="#addVideoTab">Add Video</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" id="mod-1" data-toggle="tab" role="tab" href="#">Link</a>
+				    <a class="nav-link" id="myVideo" data-toggle="tab" role="tab" href="#myVideoTab">Link</a>
 				  </li>
 				</ul>
 				<div class="tab-content" id="myTabContent">
-				  <div class="tab-pane fade show active" id="login" role="tabpanel"></div>
-				  		<form action="/action_page.php">
-						  <div class="imgcontainer">
-						    <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
-						  </div>
+				  <div class="tab-pane fade show active" id="loginTab" role="tabpanel">
+				  	 <form class="login-form">
+			             <div class="imgcontainer">
+			                <img src="images/ash.jpg" alt="Avatar" class="avatar">
+			               </div>
 
-						  <div class="container">
-						    <label for="uname"><b>Username</b></label>
-						    <input type="text" placeholder="Enter Username" name="uname" required>
-						        
-						    <button type="submit">Login</button>
+			               <div class="container">
+			                 <label for="inputUsername"><b>Username</b></label>
+		                
+			                <input type="username" class="form-control" id="inputUsername"placeholder="Enter Username" name="uname" required>
+		                    
+			                <button type="submit" class="btn btn-primary">Login</button>
+			             </div>
+			           </form>
+				  </div>
+				  <div class="tab-pane fade" id="addVideoTab" role="tabpanel">
+				  	<label class="font-weight-bold tab-spacer"><h3>Add Video</h3></label>
+				  		<form class="addVid-form">
+						  <div class="form-row">
+						    <div class="form-group col-md-6">
+						      <label for="inputVideoName">Video Name</label>
+						      <input type="text" class="form-control" id="vidName" placeholder="Video name">
+						    </div>
+						    <div class="form-group col-md-6">
+						      <label for="inputInstructor">Instructor</label>
+						      <input type="text" class="form-control" id="instructor" placeholder="Instructor Name">
+						    </div>
 						  </div>
+						  <div class="form-group">
+						    <label for="inputAddress">Description</label>
+						    <input type="text" class="form-control" id="inputDescription" placeholder="Video deiscription">
+						  </div>
+						  <div class="form-row">
+						    <div class="form-group col-md-4">
+						      <label for="inputCity">Video ID</label>
+						      <input type="text" class="form-control" id="inputYoutube_id">
+						    </div>
+						    <div class="form-group col-md-4">
+						      <label for="inputZip">Length</label>
+						      <input type="text" class="form-control" id="inputVideoLength" placeholder="50 mins">
+						    </div>
+						    <div class="form-group col-md-4">
+						      <label for="inputCetagory">Cetagory</label>
+						      <select id="inputCetagory" class="form-control">
+						        <option selected>Choose Cetagory</option>
+						        <option>Mod 1</option>
+						        <option>Mod 2</option>
+						        <option>Mod 3</option>
+						        <option>Mod 4</option>
+						      </select>
+						    </div>
+						  </div>
+						  <button type="submit" class="btn btn-secondary">Create Video</button>
 						</form>
-				  <div class="tab-pane fade" id="mod2Tab" role="tabpanel"></div>
-				  <div class="tab-pane fade" id="mod3Tab" role="tabpanel"></div>
+				  </div>
+				  <div class="tab-pane fade" id="myVideoTab" role="tabpanel">
+				  	<label class="font-weight-bold tab-spacer"><h3>My Video</h3></label>
+				  </div>
 				  <div class="tab-pane fade" id="mod4Tab" role="tabpanel"></div>
 				</div>
 			</div>
