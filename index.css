@@ -190,6 +190,16 @@ body {
   color: white;
 }
 
+.vid-del-btn{
+  width: 15%;
+  margin-bottom: 0px;
+  margin-top: 10px;
+  background-color: #af4c4c;
+  float: right;
+  vertical-align: top;
+  color: white;
+}
+
 .vid-add-btn{
   margin-bottom: 0px;
   margin-top: 10px;
@@ -220,4 +230,3 @@ body {
   color: lightgrey;
   margin-top: 8px;
 }
-
