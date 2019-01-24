@@ -28,13 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
     return document.querySelector('.vid-notes-div')
   }
 
-function vidNotesDiv(){
-  return document.querySelector('.vid-notes-div')
-}
-
-function welcomeDiv(){
-  return document.querySelector('.welcome-div')
-}
+  function welcomeDiv(){
+    return document.querySelector('.welcome-div')
+  }
 
   function onPlayerReady(event) {
     isReady = true;
@@ -86,6 +82,7 @@ function login(username){
 
     document.querySelector('.welcome-div').innerText = `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`
     document.querySelector('.welcome-div').id = user.id
+    document.querySelector('.welcome-div').dataset.status = user.status
     const closeModal = () => {
       $("#login-modal").removeClass("in");
       $(".modal-backdrop").remove();
@@ -100,7 +97,7 @@ function login(username){
       myVideo();
       addVideo();
       mod()
-      
+
     }
     else if (user.status === 'student'){
       console.log('is student')
@@ -108,7 +105,7 @@ function login(username){
       myVideo();
       renderUserLikedVideos(user)
       mod()
-      
+
     }
     else {
       alert('Sorry!')
@@ -178,9 +175,7 @@ function renderVideoCard(video){
     vidDetails.innerText = `Instructor: ${video.instructor}`
     vidCard.appendChild(vidDetails)
 
-    // vidAddBtn = document.createElement('div')
-    // vidCard.appendChild(vidAddBtn)
-
+    if(welcomeDiv().dataset.status === "student"){
     addBtn = document.createElement('button')
     addBtn.classList.add('vid-add-btn', 'btn')
     addBtn.id = `add-btn-${video.id}`
@@ -190,9 +185,9 @@ function renderVideoCard(video){
       e.stopPropagation()
       addToMyList(e)
     })
-    // vidAddBtn.appendChild(addBtn)
     vidCard.appendChild(addBtn)
-}
+    }
+    else
 
 function addToMyList(event){
   let id = parseId(event.target.id)
