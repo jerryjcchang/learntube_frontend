@@ -23,12 +23,10 @@
   </head>
   <body>
 	<nav class="navbar navbar-dark bg-dark">
-	  <a class="navbar-brand" href="#">
-	    <img src="images/logo.png" height="30" alt="">
-
-      <div class="welcome-div"></div>
-
-    </a>
+	    <a class="navbar-brand" href="#">
+		    <img src="images/logo.png" height="30" alt="">
+	      	<div class="welcome-div"></div>
+        </a>
 	</nav>
   	<div class="container-fluid">
   		<div class="row tab-spacer">
@@ -54,65 +52,53 @@
 				  <div class="tab-pane fade" id="mod4Tab" role="tabpanel"></div>
 				</div>
   			</div>
-
-        <div id="myModal" class="modal">
+  			<div class="modal fade in show" style="display:block" id="login-modal" tabindex="-1" role="dialog">
+			    <div class="modal-dialog modal-dialog-centered" role="document">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			        		<h5 class="modal-title">Login</h5>
+			      		</div>
+			      		<form class="login-form">
+			      			<div class="modal-body">
+			            		<div class="container">
+			                		<input type="username" class="form-control" id="inputUsername"placeholder="Enter Username" name="uname" required>
+			            		</div>
+							</div>
+					      	<div class="modal-footer">
+					       		<button type="submit" class="btn btn-primary">Login</button>
+				      		</div>
+		          		</form>
+			    	</div>
+			  	</div>
+			</div>
+	        <div id="myModal" class="modal">
 		        <div class="modal-container">
-		          <span class="close">&times
-		          </span>
-		          <div class="video-header"></div>
-		          <div class="modal-content">
-		          </div>
-		          <div class="vid-notes-div">
-		            <div class="vid-notes-header">My Notes</div>
-		          </div>
+		        	<span class="close">&times</span>
+		          	<div class="video-header">
+		          	</div>
+		          	<div class="modal-content video-modal">
+		          	</div>
+		          	<div class="vid-notes-div">
+		            	<div class="vid-notes-header">My Notes</div>
+		          	</div>
 		        </div>
 		    </div>
 
-<!-- <div class="bs-example">
-      <div id="myModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">YouTube Video</h4>
-                </div>
-                <div class="modal-body">
-                    "Hello World"
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
 			<div class="col-sm-6">
 				<ul class="nav nav-tabs">
 				  <li class="nav-item">
-				    <a class="nav-link active" id="login" data-toggle="tab" role="tab" href="#loginTab">Login</a>
+				    <a class="nav-link active" id="myVideo" data-toggle="tab" role="tab" href="#myVideoTab">My Video</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link d-none" id="addVideo" data-toggle="tab" role="tab" href="#addVideoTab">Add Video</a>
 				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link" id="myVideo" data-toggle="tab" role="tab" href="#myVideoTab">My Videos</a>
-
-				  </li>
 				</ul>
 				<div class="tab-content" id="myTabContent">
-				  <div class="tab-pane fade show active" id="loginTab" role="tabpanel">
-				  	 <form class="login-form">
-			             <div class="imgcontainer">
-			                <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
-			               </div>
-			               <div class="container">
-			                 <label for="inputUsername"><b>Username</b></label>
-
-			                <input type="username" class="form-control" id="inputUsername"placeholder="Enter Username" name="uname" required>
-
-			                <button type="submit" class="btn btn-primary">Login</button>
-			             </div>
-			           </form>
-				  </div>
-				  <div class="tab-pane fade" id="addVideoTab" role="tabpanel">
-				  	<label class="font-weight-bold tab-spacer"><h3>Add Video</h3></label>
+				  	<div class="tab-pane fade show active" id="myVideoTab" role="tabpanel">
+				  		<label class="font-weight-bold tab-spacer"><h3>My Video</h3></label>
+				  	</div>
+				    <div class="tab-pane fade" id="addVideoTab" role="tabpanel">
+				  		<label class="font-weight-bold tab-spacer"><h3>Add Video</h3></label>
 				  		<form class="addVid-form">
 						  <div class="form-row">
 						    <div class="form-group col-md-6">
@@ -150,11 +136,9 @@
 						  </div>
 						  <button type="submit" class="btn btn-secondary">Create Video</button>
 						</form>
-				  </div>
-				  <div class="tab-pane fade" id="myVideoTab" role="tabpanel">
-				  	<label class="font-weight-bold tab-spacer"><h3>My List</h3></label>
-				  </div>
-				  <div class="tab-pane fade" id="mod4Tab" role="tabpanel"></div>
+				  	</div>
+				  	<div class="tab-pane fade" id="mod4Tab" role="tabpanel">
+				  	</div>
 				</div>
 			</div>
   		</div>

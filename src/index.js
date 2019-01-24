@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function modal(){
-    return document.querySelector('#myModal')
+    return document.querySelector('.modal')
   }
 
   function modalXButton(){
@@ -24,13 +24,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.modal-content').src = ''
   }
 
-  function modalContent(){
-    return document.querySelector('.modal-content')
+  function vidNotesDiv(){
+    return document.querySelector('.vid-notes-div')
   }
-
-function vidNotesDiv(){
-  return document.querySelector('.vid-notes-div')
-}
 
   function onPlayerReady(event) {
     isReady = true;
@@ -81,19 +77,27 @@ function login(username){
   getUser(username).then(user => {
     document.querySelector('.welcome-div').innerText = `${user.first_name} ${user.last_name}`
     document.querySelector('.welcome-div').id = user.id
-    renderUserLikedVideos(user)
-    console.log(user)
+    const closeModal = () => {
+      $("#login-modal").removeClass("in");
+      $(".modal-backdrop").remove();
+      $("#login-modal").hide();
+    }
+
+
     if (user.status === 'instructor') {
       console.log('is instructor')
+      renderUserLikedVideos(user)
       addVideo();
+      closeModal();
     }
     else if (user.status === 'student'){
       console.log('is student')
+      closeModal();
+      renderUserLikedVideos(user)
     }
     else {
       // not a valid username
     }
-    document.querySelector('.login-form').reset()
   })
 }
 
@@ -218,9 +222,9 @@ function addVideo(){
 
 function handleCardClick(video){
   let modal = document.querySelector('#myModal')
-  let modalContent = document.querySelector('.modal-content')
+  let modalContent = document.querySelector('.video-modal')
   modal.style.display = "block"
-  document.querySelector('.modal-content').src = `http://www.youtube.com/embed/${video.youtube_id}`
+  modalContent.src = `http://www.youtube.com/embed/${video.youtube_id}`
   document.querySelector('.video-header').innerText = `${video.name} (${video.instructor})`
 }
 
@@ -231,7 +235,7 @@ function clearChildNodes(node){
 }
 
 function initYouTubePlayer(){
-  player = new YT.Player(document.querySelector('.modal-content'), {
+  player = new YT.Player(document.querySelector('.video-modal'), {
     height: '60%',
     width: '85%',
     // videoId: '',
