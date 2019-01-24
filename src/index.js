@@ -118,7 +118,8 @@ function renderVideoCard(video){
     vidCard.dataset.toggle = "modal"
 // COMMENT BACK IN TO ENABLE MODAL //
     // vidCard.addEventListener('click', (e) => {
-    //   handleCardClick(video)})
+    //   handleCardClick(video)
+    // }, true)
     modContainer.prepend(vidCard)
 
     vidImg = document.createElement('img')
@@ -144,13 +145,12 @@ function renderVideoCard(video){
 
     addBtn.addEventListener('click', addToMyList)
     vidAddBtn.appendChild(addBtn)
-
+    console.log(video)
 }
 
 function addToMyList(event){
-  // debugger
-  let id = event.target.id
-  debugger
+  event.preventDefault()
+  let id = parseId(event.target.id)
   let data = {'video_id': id}
     let userID = document.querySelector('.welcome-div').id
     // debugger
@@ -165,8 +165,7 @@ function addToMyList(event){
     .then(res => res.json())
     .then(userVideo => {
       // debugger
-      // renderUserVideo(userVideo);
-      console.log(userVideo)
+      renderUserVideo(userVideo);
     })
 }
 
@@ -250,3 +249,7 @@ function initNotesForm(){
   notes
   let notesInput = document.createElement('input')
 }
+
+function parseId(id){
+    return id.split('-')[id.split('-').length-1]
+  }
