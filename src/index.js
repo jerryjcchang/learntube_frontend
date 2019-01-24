@@ -20,21 +20,17 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function handleXButton(e){
+    document.querySelector('.video-modal').src = ''
     modal().style.display = "none"
-    document.querySelector('.modal-content').src = ''
   }
 
   function vidNotesDiv(){
     return document.querySelector('.vid-notes-div')
   }
 
-function vidNotesDiv(){
-  return document.querySelector('.vid-notes-div')
-}
-
-function welcomeDiv(){
-  return document.querySelector('.welcome-div')
-}
+  function welcomeDiv(){
+    return document.querySelector('.welcome-div')
+  }
 
   function onPlayerReady(event) {
     isReady = true;
@@ -297,7 +293,7 @@ function clearChildNodes(node){
 }
 
 function initYouTubePlayer(){
-  player = new YT.Player(document.querySelector('.video-modal'), {
+  let player = new YT.Player(document.querySelector('.video-modal'), {
     height: '60%',
     width: '85%',
     // videoId: '',
@@ -317,3 +313,5 @@ function initNotesForm(){
 function parseId(id){
     return id.split('-')[id.split('-').length-1]
   }
+
+document.querySelector('.vid-notes-form-container').innerText = 'Hello World'
