@@ -56,7 +56,7 @@ function welcomeDiv(){
   let loginForm = document.querySelector('.login-form')
   loginForm.addEventListener('submit', function(e){
     e.preventDefault();
-    const username = document.querySelector('#inputUsername').value
+    const username = document.querySelector('#inputUsername').value.toLowerCase()
     login(username)
   })
 
@@ -83,7 +83,7 @@ function getUser(username) {
 
 function login(username){
   getUser(username).then(user => {
-    document.querySelector('.welcome-div').innerText = `${user.first_name} ${user.last_name}`
+    document.querySelector('.welcome-div').innerText = `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`
     document.querySelector('.welcome-div').id = user.id
     const closeModal = () => {
       $("#login-modal").removeClass("in");

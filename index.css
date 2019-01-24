@@ -206,3 +206,10 @@ body {
   background-color: #484b4c;
   border-color: #484b4c;
 }
+
+.welcome-div{
+  float: right;
+  font-size: 20px;
+  color: lightgrey;
+  margin-top: 8px;
+}
