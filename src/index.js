@@ -139,22 +139,25 @@ function renderVideoCard(video){
     vidDetails.innerText = `Instructor: ${video.instructor}`
     vidCard.appendChild(vidDetails)
 
-    vidAddBtn = document.createElement('div')
-    vidCard.appendChild(vidAddBtn)
+    // vidAddBtn = document.createElement('div')
+    // vidCard.appendChild(vidAddBtn)
 
     addBtn = document.createElement('button')
     addBtn.classList.add('vid-add-btn')
     addBtn.id = `add-btn-${video.id}`
     addBtn.innerText = 'Add To My List'
 
-    addBtn.addEventListener('click', (e)=>{
-      addToMyList
-      e.stopPropagation()})
-    vidAddBtn.appendChild(addBtn)
+    addBtn.addEventListener('click', function(e){
+      addToMyList()
+      e.stopPropagation()
+    })
+    // vidAddBtn.appendChild(addBtn)
+    vidCard.appendChild(addBtn)
 }
 
 function addToMyList(event){
   event.preventDefault()
+  console.log(event)
   let id = parseId(event.target.id)
   let data = {'video_id': id}
     let userID = document.querySelector('.welcome-div').id
@@ -172,6 +175,11 @@ function addToMyList(event){
       // debugger
       renderVideoCard(userVideo);
     })
+}
+
+function removeFromMyList(event){
+  event.preventDefault()
+  let id = parseId(event.target.id)
 }
 
 function renderMyVideoCard(video){
@@ -201,8 +209,8 @@ function renderMyVideoCard(video){
       vidDetails.innerText = `Instructor: ${video.instructor}`
       vidCard.appendChild(vidDetails)
 
-      vidAddBtn = document.createElement('div')
-      vidCard.appendChild(vidAddBtn)
+      // vidAddBtn = document.createElement('div')
+      // vidCard.appendChild(vidAddBtn)
 
       addBtn = document.createElement('button')
       addBtn.classList.add('vid-remove-btn')
@@ -210,9 +218,10 @@ function renderMyVideoCard(video){
       addBtn.innerText = 'Remove From My List'
 
       addBtn.addEventListener('click', (e)=>{
-        addToMyList
+        removeFromMyList
         e.stopPropagation()})
-      vidAddBtn.appendChild(addBtn)
+      // vidAddBtn.appendChild(addBtn)
+      vidCard.appendChild(addBtn)
 }
 
 

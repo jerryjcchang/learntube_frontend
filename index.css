@@ -31,11 +31,11 @@ body {
   top: 5rem;
 }
 
-p, ol, ul, td {
+/* p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
-}
+} */
 
 /* .videos-container {
   margin: auto;
@@ -141,9 +141,6 @@ span.psw {
   color: #ffffff;
 }
 
-.vid-preview-card p{
-  font-size: 15px;
-}
 
 .vid-preview-card img {
   margin-right: 15px;
@@ -151,13 +148,20 @@ span.psw {
 }
 
 .vid-title {
+  display: inline-block;
   font-size: 18px;
   font-weight: bolder;
   margin-top: 10px;
   margin-bottom: 10px;
-  vertical-align: center;
-
+  width: 50%;
 }
+
+.vid-preview-card p{
+  display: inline-block;
+  font-size: 15px;
+  width: 50%;
+}
+
 
 /* The Modal (background) */
 .modal {
@@ -230,16 +234,21 @@ span.psw {
 #addVideoTab {
   margin-right: 8px
 }
+
 .vid-add-btn{
-  margin-top: 10px;
   margin-bottom: 0px;
+  margin-top: 10px;
   background-color: #027de7;
-}
-.vid-remove-btn{
   float: right;
-  margin-top: 10px;
+  vertical-align: top;
+}
+
+.vid-remove-btn{
   margin-bottom: 0px;
+  margin-top: 10px;
   background-color: #af4c4c;
+  float: right;
+  vertical-align: top;
 }
 
 .btn-primary{
