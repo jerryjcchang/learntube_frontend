@@ -28,6 +28,14 @@ document.addEventListener('DOMContentLoaded', function() {
     return document.querySelector('.vid-notes-div')
   }
 
+function vidNotesDiv(){
+  return document.querySelector('.vid-notes-div')
+}
+
+function welcomeDiv(){
+  return document.querySelector('.welcome-div')
+}
+
   function onPlayerReady(event) {
     isReady = true;
   }
@@ -102,7 +110,8 @@ function login(username){
 }
 
 function renderUserLikedVideos(user){
-  user.videos.forEach(video => renderUserVideo(video))
+  clearChildNodes(document.querySelector('#myVideoTab'))
+  user.videos.forEach(video => renderMyVideoCard(video))
 }
 
 
@@ -117,11 +126,10 @@ function renderVideoCard(video){
     vidCard.id = `vid-card-${video.id}`
     vidCard.classList.add('vid-preview-card')
     modContainer.appendChild(vidCard)
-    vidCard.dataset.toggle = "modal"
 // COMMENT BACK IN TO ENABLE MODAL //
     vidCard.addEventListener('click', (e) => {
       handleCardClick(video)
-    }, true)
+    })
     modContainer.prepend(vidCard)
 
     vidImg = document.createElement('img')
@@ -137,24 +145,26 @@ function renderVideoCard(video){
     vidDetails.innerText = `Instructor: ${video.instructor}`
     vidCard.appendChild(vidDetails)
 
-    vidAddBtn = document.createElement('div')
-    vidCard.appendChild(vidAddBtn)
+    // vidAddBtn = document.createElement('div')
+    // vidCard.appendChild(vidAddBtn)
 
     addBtn = document.createElement('button')
-    addBtn.classList.add('vid-add-btn')
+    addBtn.classList.add('vid-add-btn', 'btn')
     addBtn.id = `add-btn-${video.id}`
-    addBtn.innerText = 'Add to my list'
+    addBtn.innerText = 'Add To My List'
 
-    addBtn.addEventListener('click', addToMyList)
-    vidAddBtn.appendChild(addBtn)
-    console.log(video)
+    addBtn.addEventListener('click', function(e){
+      e.stopPropagation()
+      addToMyList(e)
+    })
+    // vidAddBtn.appendChild(addBtn)
+    vidCard.appendChild(addBtn)
 }
 
 function addToMyList(event){
-  event.preventDefault()
   let id = parseId(event.target.id)
   let data = {'video_id': id}
-    let userID = document.querySelector('.welcome-div').id
+  let userID = document.querySelector('.welcome-div').id
     // debugger
     fetch(`http://localhost:3000/api/v1/users/${userID}/videos/add`, {
       method: 'PATCH',
@@ -167,23 +177,71 @@ function addToMyList(event){
     .then(res => res.json())
     .then(userVideo => {
       // debugger
-      renderUserVideo(userVideo);
+      renderMyVideoCard(userVideo);
     })
 }
 
-function renderUserVideo(userVideo){
-  console.log(userVideo)
+function renderMyVideoCard(video){
+  console.log(video)
   const myVidTab = document.querySelector('#myVideoTab')
 
-  const myVidDiv = document.createElement('div')
-  myVidDiv.id = userVideo.id
-  myVidDiv.classList.add(`my-vid-card`)
-  myVidTab.appendChild(myVidDiv)
+      vidCard = document.createElement('div')
+      vidCard.id = `my-vid-card-${video.id}`
+      vidCard.classList.add('vid-preview-card')
+      myVidTab.appendChild(vidCard)
 
-  const myVidName = document.createElement('h3')
-  myVidName.innerText = userVideo.name
-  myVidDiv.appendChild(myVidName)
+      vidCard.addEventListener('click', (e) => {
+        handleCardClick(video)
+      })
+      myVidTab.prepend(vidCard)
 
+      vidImg = document.createElement('img')
+      vidImg.src = `https://img.youtube.com/vi/${video.youtube_id}/1.jpg`
+      vidCard.appendChild(vidImg)
+
+      vidTitle = document.createElement('div')
+      vidTitle.classList.add('vid-title')
+      vidTitle.innerText = video.name
+      vidCard.appendChild(vidTitle)
+
+      vidDetails = document.createElement('p')
+      vidDetails.innerText = `Instructor: ${video.instructor}`
+      vidCard.appendChild(vidDetails)
+
+      // vidAddBtn = document.createElement('div')
+      // vidCard.appendChild(vidAddBtn)
+
+      removeBtn = document.createElement('button')
+      removeBtn.classList.add('vid-remove-btn','btn')
+      removeBtn.id = `remove-btn-${video.id}`
+      removeBtn.innerText = 'Remove'
+
+      removeBtn.addEventListener('click', function(e){
+        e.stopPropagation()
+        removeFromMyList(e)
+      })
+      // vidAddBtn.appendChild(addBtn)
+      vidCard.appendChild(removeBtn)
+}
+
+function removeFromMyList(event){
+  let userId = document.querySelector('.welcome-div').id
+  let videoId = parseId(event.target.id)
+  let data = {
+    user_id: userId,
+    video_id: videoId
+  }
+  // debugger
+  fetch(`http://localhost:3000/api/v1/users/${userId}/videos/remove`, {
+    method: "DELETE",
+    headers:{
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(r => r.json())
+  .then(id => document.querySelector(`#my-vid-card-${id}`).remove())
 }
 
 
