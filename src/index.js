@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function modal(){
-    return document.querySelector('.modal')
+    return document.querySelector('#myModal')
   }
 
   function modalXButton(){
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     modalXButton().addEventListener('click', handleXButton)
   }
 
-  function handleXButton(){
+  function handleXButton(e){
     modal().style.display = "none"
     document.querySelector('.modal-content').src = ''
   }
@@ -119,9 +119,9 @@ function renderVideoCard(video){
     modContainer.appendChild(vidCard)
     vidCard.dataset.toggle = "modal"
 // COMMENT BACK IN TO ENABLE MODAL //
-    // vidCard.addEventListener('click', (e) => {
-    //   handleCardClick(video)
-    // }, true)
+    vidCard.addEventListener('click', (e) => {
+      handleCardClick(video)
+    }, true)
     modContainer.prepend(vidCard)
 
     vidImg = document.createElement('img')
@@ -226,6 +226,10 @@ function handleCardClick(video){
   modal.style.display = "block"
   modalContent.src = `http://www.youtube.com/embed/${video.youtube_id}`
   document.querySelector('.video-header').innerText = `${video.name} (${video.instructor})`
+  // $('#myModal').on('hidden.bs.modal', function () {
+  //   debugger
+  //   player.stopVideo()
+  // })
 }
 
 function clearChildNodes(node){
