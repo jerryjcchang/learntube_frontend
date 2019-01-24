@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-  window.onYouTubeIframeAPIReady = function() {
-    console.log('ready to embed YT videos')
+  // window.onYouTubeIframeAPIReady = function() {
+  //   console.log('ready to embed YT videos')
 
     getAllVideos()
     initModalXButton()
-    initYouTubePlayer()
-  }
+    // initYouTubePlayer()
+    // initVideoPlayer()
+  // }
 
   function modal(){
     return document.querySelector('#myModal')
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function handleXButton(e){
-    document.querySelector('.video-modal').src = ''
+    document.querySelector('.video-player').src = ''
     modal().style.display = "none"
   }
 
@@ -275,10 +276,11 @@ function addVideo(){
 
 
 function handleCardClick(video){
-  let modal = document.querySelector('#myModal')
-  let modalContent = document.querySelector('.video-modal')
-  modal.style.display = "block"
-  modalContent.src = `http://www.youtube.com/embed/${video.youtube_id}`
+  let videoModal = document.querySelector('.video-modal')
+  // let modalContent = document.querySelector('.video-modal')
+  let videoPlayer = document.querySelector('.video-player')
+  videoModal.style.display = "block"
+  videoPlayer.src = `http://www.youtube.com/embed/${video.youtube_id}`
   document.querySelector('.video-header').innerText = `${video.name} (${video.instructor})`
   // $('#myModal').on('hidden.bs.modal', function () {
   //   debugger
@@ -292,17 +294,17 @@ function clearChildNodes(node){
     }
 }
 
-function initYouTubePlayer(){
-  let player = new YT.Player(document.querySelector('.video-modal'), {
-    height: '60%',
-    width: '85%',
-    // videoId: '',
-    events: {
-      // 'onReady': onPlayerReady//,
-      //'onStateChange': onPlayerStateChange
-    }
-  })
-}
+// function initYouTubePlayer(){
+//   let player = new YT.Player(document.querySelector('.video-modal'), {
+//     height: '60%',
+//     width: '85%',
+//     // videoId: '',
+//     events: {
+//       // 'onReady': onPlayerReady//,
+//       //'onStateChange': onPlayerStateChange
+//     }
+//   })
+// }
 
 function initNotesForm(){
   let notesForm = document.createElement('form')
@@ -314,4 +316,15 @@ function parseId(id){
     return id.split('-')[id.split('-').length-1]
   }
 
-document.querySelector('.vid-notes-form-container').innerText = 'Hello World'
+// document.querySelector('.vid-notes-form-container').innerText = 'Hello World'
+
+function videoModal(){
+  return document.querySelector('.video-modal')
+}
+
+// function initVideoPlayer(){
+//   iframe = document.createElement('iframe')
+//   iframe.src = ""
+//   iframe.class = "video-player"
+//   videoModal().appendChild(iframe)
+// }
