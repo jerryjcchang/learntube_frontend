@@ -32,6 +32,10 @@ function vidNotesDiv(){
   return document.querySelector('.vid-notes-div')
 }
 
+function welcomeDiv(){
+  return document.querySelector('.welcome-div')
+}
+
   function onPlayerReady(event) {
     isReady = true;
   }
@@ -100,7 +104,8 @@ function login(username){
 }
 
 function renderUserLikedVideos(user){
-  user.videos.forEach(video => renderUserVideo(video))
+  clearChildNodes(document.querySelector('#myVideoTab'))
+  user.videos.forEach(video => renderMyVideoCard(video))
 }
 
 
@@ -115,11 +120,10 @@ function renderVideoCard(video){
     vidCard.id = `vid-card-${video.id}`
     vidCard.classList.add('vid-preview-card')
     modContainer.appendChild(vidCard)
-    vidCard.dataset.toggle = "modal"
 // COMMENT BACK IN TO ENABLE MODAL //
-    // vidCard.addEventListener('click', (e) => {
-    //   handleCardClick(video)
-    // }, true)
+    vidCard.addEventListener('click', (e) => {
+      handleCardClick(video)
+    })
     modContainer.prepend(vidCard)
 
     vidImg = document.createElement('img')
@@ -141,11 +145,12 @@ function renderVideoCard(video){
     addBtn = document.createElement('button')
     addBtn.classList.add('vid-add-btn')
     addBtn.id = `add-btn-${video.id}`
-    addBtn.innerText = 'Add to my list'
+    addBtn.innerText = 'Add To My List'
 
-    addBtn.addEventListener('click', addToMyList)
+    addBtn.addEventListener('click', (e)=>{
+      addToMyList
+      e.stopPropagation()})
     vidAddBtn.appendChild(addBtn)
-    console.log(video)
 }
 
 function addToMyList(event){
@@ -165,23 +170,49 @@ function addToMyList(event){
     .then(res => res.json())
     .then(userVideo => {
       // debugger
-      renderUserVideo(userVideo);
+      renderVideoCard(userVideo);
     })
 }
 
-function renderUserVideo(userVideo){
-  console.log(userVideo)
+function renderMyVideoCard(video){
+  console.log(video)
   const myVidTab = document.querySelector('#myVideoTab')
 
-  const myVidDiv = document.createElement('div')
-  myVidDiv.id = userVideo.id
-  myVidDiv.classList.add(`my-vid-card`)
-  myVidTab.appendChild(myVidDiv)
+      vidCard = document.createElement('div')
+      vidCard.id = `vid-card-${video.id}`
+      vidCard.classList.add('vid-preview-card')
+      myVidTab.appendChild(vidCard)
 
-  const myVidName = document.createElement('h3')
-  myVidName.innerText = userVideo.name
-  myVidDiv.appendChild(myVidName)
+      vidCard.addEventListener('click', (e) => {
+        handleCardClick(video)
+      })
+      myVidTab.prepend(vidCard)
 
+      vidImg = document.createElement('img')
+      vidImg.src = `https://img.youtube.com/vi/${video.youtube_id}/1.jpg`
+      vidCard.appendChild(vidImg)
+
+      vidTitle = document.createElement('div')
+      vidTitle.classList.add('vid-title')
+      vidTitle.innerText = video.name
+      vidCard.appendChild(vidTitle)
+
+      vidDetails = document.createElement('p')
+      vidDetails.innerText = `Instructor: ${video.instructor}`
+      vidCard.appendChild(vidDetails)
+
+      vidAddBtn = document.createElement('div')
+      vidCard.appendChild(vidAddBtn)
+
+      addBtn = document.createElement('button')
+      addBtn.classList.add('vid-remove-btn')
+      addBtn.id = `remove-btn-${video.id}`
+      addBtn.innerText = 'Remove From My List'
+
+      addBtn.addEventListener('click', (e)=>{
+        addToMyList
+        e.stopPropagation()})
+      vidAddBtn.appendChild(addBtn)
 }
 
 

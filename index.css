@@ -230,3 +230,19 @@ span.psw {
 #addVideoTab {
   margin-right: 8px
 }
+.vid-add-btn{
+  margin-top: 10px;
+  margin-bottom: 0px;
+  background-color: #027de7;
+}
+.vid-remove-btn{
+  float: right;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  background-color: #af4c4c;
+}
+
+.btn-primary{
+  background-color: #484b4c;
+  border-color: #484b4c;
+}
