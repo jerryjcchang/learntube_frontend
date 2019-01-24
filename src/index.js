@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function handleXButton(e){
     modal().style.display = "none"
-    document.querySelector('.modal-content').src = ''
+    document.querySelector('.video-modal').src = ''
   }
 
   function vidNotesDiv(){
