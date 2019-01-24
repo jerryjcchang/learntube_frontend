@@ -31,11 +31,11 @@ body {
   top: 5rem;
 }
 
-p, ol, ul, td {
+/* p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
-}
+} */
 
 /* .videos-container {
   margin: auto;
@@ -92,9 +92,6 @@ p, ol, ul, td {
   color: #ffffff;
 }
 
-.vid-preview-card p{
-  font-size: 15px;
-}
 
 .vid-preview-card img {
   margin-right: 15px;
@@ -102,13 +99,20 @@ p, ol, ul, td {
 }
 
 .vid-title {
+  display: inline-block;
   font-size: 18px;
   font-weight: bolder;
   margin-top: 10px;
   margin-bottom: 10px;
-  vertical-align: center;
-
+  width: 50%;
 }
+
+.vid-preview-card p{
+  display: inline-block;
+  font-size: 15px;
+  width: 50%;
+}
+
 
 /* The Modal (background) */
 .modal {
@@ -179,8 +183,41 @@ p, ol, ul, td {
   margin-right: 8px
 }
 
+
 .welcome-font {
   font-style: oblique;
   font-size: 20px;
   color: white;
 }
+
+.vid-add-btn{
+  margin-bottom: 0px;
+  margin-top: 10px;
+  background-color: #027de7;
+  float: right;
+  vertical-align: top;
+  color: white;
+}
+
+.vid-remove-btn{
+  width: 15%;
+  margin-bottom: 0px;
+  margin-top: 10px;
+  background-color: #af4c4c;
+  float: right;
+  vertical-align: top;
+  color: white;
+}
+
+.btn-primary{
+  background-color: #484b4c;
+  border-color: #484b4c;
+}
+
+.welcome-div{
+  float: right;
+  font-size: 20px;
+  color: lightgrey;
+  margin-top: 8px;
+}
+

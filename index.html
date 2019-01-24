@@ -23,34 +23,34 @@
   </head>
   <body>
 	<nav class="navbar navbar-dark bg-dark">
+
 	    <a class="navbar-brand" href="#">
 		    <img src="images/logo.png" height="30" alt="">
-        </a>
-	    <div class="welcome-div float-right welcome-font"></div>
-	    
+      	</a>
+    <div class="welcome-div"></div>
 	</nav>
   	<div class="container-fluid">
   		<div class="row tab-spacer">
   			<div class="col-sm-6 scroll">
   				<ul class="nav nav-tabs">
 				  <li class="nav-item">
-				    <a class="nav-link active" id="mod-1" data-toggle="tab" role="tab" href="#mod1Tab">Mod 1</a>
+				    <a class="nav-link active d-none" id="mod-1" data-toggle="tab" role="tab" href="#mod1Tab">Mod 1</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" id="mod-2" data-toggle="tab" role="tab" href="#mod2Tab">Mod 2</a>
+				    <a class="nav-link d-none" id="mod-2" data-toggle="tab" role="tab" href="#mod2Tab">Mod 2</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" id="mod-3" data-toggle="tab" role="tab" href="#mod3Tab">Mod 3</a>
+				    <a class="nav-link d-none" id="mod-3" data-toggle="tab" role="tab" href="#mod3Tab">Mod 3</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" id="mod-4" data-toggle="tab" role="tab" href="#mod4Tab">Mod 4</a>
+				    <a class="nav-link d-none" id="mod-4" data-toggle="tab" role="tab" href="#mod4Tab">Mod 4</a>
 				  </li>
 				</ul>
 				<div class="tab-content" id="myTabContent">
-				  <div class="tab-pane fade show active" id="mod1Tab" role="tabpanel"></div>
-				  <div class="tab-pane fade" id="mod2Tab" role="tabpanel"></div>
-				  <div class="tab-pane fade" id="mod3Tab" role="tabpanel"></div>
-				  <div class="tab-pane fade" id="mod4Tab" role="tabpanel"></div>
+				  <div class="tab-pane fade show active d-none" id="mod1Tab" role="tabpanel"></div>
+				  <div class="tab-pane fade d-none" id="mod2Tab" role="tabpanel"></div>
+				  <div class="tab-pane fade d-none" id="mod3Tab" role="tabpanel"></div>
+				  <div class="tab-pane fade d-none" id="mod4Tab" role="tabpanel"></div>
 				</div>
   			</div>
   			<div class="modal fade in show" style="display:block" id="login-modal" tabindex="-1" role="dialog">
