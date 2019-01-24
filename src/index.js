@@ -148,19 +148,17 @@ function renderVideoCard(video){
     addBtn.innerText = 'Add To My List'
 
     addBtn.addEventListener('click', function(e){
-      addToMyList()
       e.stopPropagation()
+      addToMyList(e)
     })
     // vidAddBtn.appendChild(addBtn)
     vidCard.appendChild(addBtn)
 }
 
 function addToMyList(event){
-  event.preventDefault()
-  console.log(event)
   let id = parseId(event.target.id)
   let data = {'video_id': id}
-    let userID = document.querySelector('.welcome-div').id
+  let userID = document.querySelector('.welcome-div').id
     // debugger
     fetch(`http://localhost:3000/api/v1/users/${userID}/videos/add`, {
       method: 'PATCH',
@@ -173,13 +171,8 @@ function addToMyList(event){
     .then(res => res.json())
     .then(userVideo => {
       // debugger
-      renderVideoCard(userVideo);
+      renderMyVideoCard(userVideo);
     })
-}
-
-function removeFromMyList(event){
-  event.preventDefault()
-  let id = parseId(event.target.id)
 }
 
 function renderMyVideoCard(video){
@@ -187,7 +180,7 @@ function renderMyVideoCard(video){
   const myVidTab = document.querySelector('#myVideoTab')
 
       vidCard = document.createElement('div')
-      vidCard.id = `vid-card-${video.id}`
+      vidCard.id = `my-vid-card-${video.id}`
       vidCard.classList.add('vid-preview-card')
       myVidTab.appendChild(vidCard)
 
@@ -212,16 +205,38 @@ function renderMyVideoCard(video){
       // vidAddBtn = document.createElement('div')
       // vidCard.appendChild(vidAddBtn)
 
-      addBtn = document.createElement('button')
-      addBtn.classList.add('vid-remove-btn')
-      addBtn.id = `remove-btn-${video.id}`
-      addBtn.innerText = 'Remove From My List'
+      removeBtn = document.createElement('button')
+      removeBtn.classList.add('vid-remove-btn')
+      removeBtn.id = `remove-btn-${video.id}`
+      removeBtn.innerText = 'Remove From My List'
 
-      addBtn.addEventListener('click', (e)=>{
-        removeFromMyList
-        e.stopPropagation()})
+      removeBtn.addEventListener('click', function(e){
+        e.stopPropagation()
+        removeFromMyList(e)
+      })
       // vidAddBtn.appendChild(addBtn)
-      vidCard.appendChild(addBtn)
+      vidCard.appendChild(removeBtn)
+}
+
+function removeFromMyList(event){
+  console.log('deleted video')
+  let userId = document.querySelector('.welcome-div').id
+  let videoId = parseId(event.target.id)
+  let data = {
+    user_id: userId,
+    video_id: videoId
+  }
+  // debugger
+  fetch(`http://localhost:3000/api/v1/users/${userId}/videos/remove`, {
+    method: "DELETE",
+    headers:{
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(r => r.json())
+  .then(id => document.querySelector(`#my-vid-card-${id}`).remove())
 }
 
 
