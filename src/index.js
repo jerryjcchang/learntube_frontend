@@ -49,12 +49,6 @@ function vidNotesDiv(){
     }
   }
 
-  // let loginBtn = document.querySelector('form')
-  // loginBtn.addEventListener('submit',function(e){
-  //    e.preventDefault();
-  //   const username = document.querySelector('#login').value
-  //   login(username)
-  // })
   let loginForm = document.querySelector('.login-form')
   loginForm.addEventListener('submit', function(e){
     e.preventDefault();
@@ -71,7 +65,6 @@ function vidNotesDiv(){
 
 })
 
-
 function getAllVideos(){
   return fetch('http://localhost:3000/api/v1/videos')
   .then(r => r.json())
@@ -86,6 +79,9 @@ function getUser(username) {
 
 function login(username){
   getUser(username).then(user => {
+    document.querySelector('.welcome-div').innerText = `${user.first_name} ${user.last_name}`
+    document.querySelector('.welcome-div').id = user.id
+    renderUserLikedVideos(user)
     console.log(user)
     if (user.status === 'instructor') {
       console.log('is instructor')
@@ -101,6 +97,9 @@ function login(username){
   })
 }
 
+function renderUserLikedVideos(user){
+  user.videos.forEach(video => renderUserVideo(video))
+}
 
 
 
@@ -115,8 +114,10 @@ function renderVideoCard(video){
     vidCard.classList.add('vid-preview-card')
     modContainer.appendChild(vidCard)
     vidCard.dataset.toggle = "modal"
-    vidCard.addEventListener('click', (e) => {
-      handleCardClick(video)})
+// COMMENT BACK IN TO ENABLE MODAL //
+    // vidCard.addEventListener('click', (e) => {
+    //   handleCardClick(video)
+    // }, true)
     modContainer.prepend(vidCard)
 
     vidImg = document.createElement('img')
@@ -132,15 +133,52 @@ function renderVideoCard(video){
     vidDetails.innerText = `Instructor: ${video.instructor}`
     vidCard.appendChild(vidDetails)
 
-    // vidAddBtn = document.createElement('button')
-    // vidAddBtn.classList.add('vid-add-btn')
-    // vidAddBtn.id = `add-btn-${tabId.id}`
-    // vidAddBtn.innerText = 'Add to my list'
+    vidAddBtn = document.createElement('div')
+    vidCard.appendChild(vidAddBtn)
 
-    // vidAddBtn.addEventListener('click', function() {
-    //   addToMyList();
-    // })
-    // vidCard.appendChild(vidAddBtn)
+    addBtn = document.createElement('button')
+    addBtn.classList.add('vid-add-btn')
+    addBtn.id = `add-btn-${video.id}`
+    addBtn.innerText = 'Add to my list'
+
+    addBtn.addEventListener('click', addToMyList)
+    vidAddBtn.appendChild(addBtn)
+    console.log(video)
+}
+
+function addToMyList(event){
+  event.preventDefault()
+  let id = parseId(event.target.id)
+  let data = {'video_id': id}
+    let userID = document.querySelector('.welcome-div').id
+    // debugger
+    fetch(`http://localhost:3000/api/v1/users/${userID}/videos/add`, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(userVideo => {
+      // debugger
+      renderUserVideo(userVideo);
+    })
+}
+
+function renderUserVideo(userVideo){
+  console.log(userVideo)
+  const myVidTab = document.querySelector('#myVideoTab')
+
+  const myVidDiv = document.createElement('div')
+  myVidDiv.id = userVideo.id
+  myVidDiv.classList.add(`my-vid-card`)
+  myVidTab.appendChild(myVidDiv)
+
+  const myVidName = document.createElement('h3')
+  myVidName.innerText = userVideo.name
+  myVidDiv.appendChild(myVidName)
 
 }
 
@@ -209,3 +247,7 @@ function initNotesForm(){
   notes
   let notesInput = document.createElement('input')
 }
+
+function parseId(id){
+    return id.split('-')[id.split('-').length-1]
+  }
