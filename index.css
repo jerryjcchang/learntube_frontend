@@ -183,6 +183,13 @@ body {
   margin-right: 8px
 }
 
+
+.welcome-font {
+  font-style: oblique;
+  font-size: 20px;
+  color: white;
+}
+
 .vid-add-btn{
   margin-bottom: 0px;
   margin-top: 10px;
@@ -213,3 +220,4 @@ body {
   color: lightgrey;
   margin-top: 8px;
 }
+

@@ -78,11 +78,12 @@ function getAllVideos(){
 function getUser(username) {
   return fetch('http://localhost:3000/api/v1/users')
   .then(r => r.json())
-  .then(users => users.find(user => user.username === username))
+  .then(users => users.find(user => user.username.toLowerCase() === username))
 }
 
 function login(username){
   getUser(username).then(user => {
+
     document.querySelector('.welcome-div').innerText = `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`
     document.querySelector('.welcome-div').id = user.id
     const closeModal = () => {
@@ -94,19 +95,38 @@ function login(username){
 
     if (user.status === 'instructor') {
       console.log('is instructor')
-      renderUserLikedVideos(user)
-      addVideo();
       closeModal();
+      renderUserLikedVideos(user);
+      myVideo();
+      addVideo();
+      mod()
+      
     }
     else if (user.status === 'student'){
       console.log('is student')
       closeModal();
+      myVideo();
       renderUserLikedVideos(user)
+      mod()
+      
     }
     else {
-      // not a valid username
+      alert('Sorry!')
     }
   })
+}
+
+function addVideo(){
+  document.querySelector('#addVideo').classList.remove('d-none')
+}
+
+function myVideo(){
+  document.querySelector('#myVideo').classList.remove('d-none')
+  const vidDiv = document.querySelector('#myVideoTab')
+
+  const myVid = document.createElement('h3')
+  myVid.innerText = 'My Video List'
+  vidDiv.prepend(myVid)
 }
 
 function renderUserLikedVideos(user){
@@ -114,6 +134,19 @@ function renderUserLikedVideos(user){
   user.videos.forEach(video => renderMyVideoCard(video))
 }
 
+function mod(){
+  document.querySelector('#mod-1').classList.remove('d-none')
+  document.querySelector('#mod1Tab').classList.remove('d-none')
+
+  document.querySelector('#mod-2').classList.remove('d-none')
+  document.querySelector('#mod2Tab').classList.remove('d-none')
+
+  document.querySelector('#mod-3').classList.remove('d-none')
+  document.querySelector('#mod3Tab').classList.remove('d-none')
+
+  document.querySelector('#mod-4').classList.remove('d-none')
+  document.querySelector('#mod4Tab').classList.remove('d-none')
+}
 
 
 function renderVideoCard(video){
@@ -273,10 +306,6 @@ function postNewVideo(){
   .then(newVideo => renderVideoCard(newVideo))
 }
 
-function addVideo(){
-  document.querySelector('#addVideo').classList.remove('d-none')
-}
-
 
 function handleCardClick(video){
   let modal = document.querySelector('#myModal')
@@ -303,10 +332,11 @@ function initYouTubePlayer(){
     // videoId: '',
     events: {
       // 'onReady': onPlayerReady//,
-      //'onStateChange': onPlayerStateChange
+      // 'onStateChange': onPlayerStateChange
     }
   })
 }
+
 
 function initNotesForm(){
   let notesForm = document.createElement('form')
