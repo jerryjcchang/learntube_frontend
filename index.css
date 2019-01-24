@@ -115,7 +115,7 @@ body {
 
 
 /* The Modal (background) */
-.modal {
+.modal2 {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -215,9 +215,9 @@ body {
 }
 
 .welcome-div{
-  float: right;
+  /*float: right;*/
   font-size: 20px;
   color: lightgrey;
-  margin-top: 8px;
+/*  margin-top: 8px;*/
 }
 

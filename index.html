@@ -12,11 +12,6 @@
 
       <link href="https://fonts.googleapis.com/css?family=Abel|Roboto|Ubuntu+Condensed" rel="stylesheet">
 
-      <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
     <meta charset="utf-8">
     <title>LearnTube</title>
         <link rel="stylesheet" href="index.css">
@@ -72,7 +67,8 @@
 			    	</div>
 			  	</div>
 			</div>
-	        <div id="myModal" class="modal">
+			
+	        <div id="myModal" class="modal modal2">
 		        <div class="modal-container">
 		        	<span class="close">&times</span>
 		          	<div class="video-header">
@@ -82,10 +78,27 @@
 		          	<div class="vid-notes-div">
 		            	<div class="vid-notes-header">My Notes</div>
 		          	</div>
+		          	<div class="note-content"> 
+		          		<form class="note-form">
+		          			<div class="form-row">
+		          				 <div class="form-group col-md-2">
+		          					<label for="inputTime">Time</label>
+		          					<input type="text" class="form-control" id="noteTime" placeholder="min(s)">
+		          				</div>
+		          				<div class="form-group col-md-9">
+		          					<label for="inputNote">Note</label>
+		          					<input type="text" class="form-control" id="noteContent" placeholder="">
+		          				</div>
+		          				<div class="form-group col-md-1">
+		          					<button type="submit" class="btn btn-secondary">Add Note</button>
+		          				</div>
+		          			</div>
+		          		</form>
+		          	</div>
 		        </div>
 		    </div>
 
-			<div class="col-sm-6">
+			<div class="col-sm-6 scroll">
 				<ul class="nav nav-tabs">
 				  <li class="nav-item">
 				    <a class="nav-link active d-none" id="myVideo" data-toggle="tab" role="tab" href="#myVideoTab">My Video</a>
