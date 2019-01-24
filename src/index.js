@@ -70,12 +70,12 @@ function getAllVideos(){
 function getUser(username) {
   return fetch('http://localhost:3000/api/v1/users')
   .then(r => r.json())
-  .then(users => users.find(user => user.username === username))
+  .then(users => users.find(user => user.username.toLowerCase() === username))
 }
 
 function login(username){
   getUser(username).then(user => {
-    document.querySelector('.welcome-div').innerText = `${user.first_name} ${user.last_name}`
+    document.querySelector('.welcome-div').innerText = `Welcome ${user.first_name} ${user.last_name}!`
     document.querySelector('.welcome-div').id = user.id
     const closeModal = () => {
       $("#login-modal").removeClass("in");
@@ -86,19 +86,34 @@ function login(username){
 
     if (user.status === 'instructor') {
       console.log('is instructor')
-      renderUserLikedVideos(user)
-      addVideo();
       closeModal();
+      renderUserLikedVideos(user);
+      myVideo();
+      addVideo();
     }
     else if (user.status === 'student'){
       console.log('is student')
       closeModal();
+      myVideo();
       renderUserLikedVideos(user)
     }
     else {
-      // not a valid username
+      alert('Sorry!')
     }
   })
+}
+
+function addVideo(){
+  document.querySelector('#addVideo').classList.remove('d-none')
+}
+
+function myVideo(){
+  document.querySelector('#myVideo').classList.remove('d-none')
+  const vidDiv = document.querySelector('#myVideoTab')
+
+  const myVid = document.createElement('h3')
+  myVid.innerText = 'My Video List'
+  vidDiv.prepend(myVid)
 }
 
 function renderUserLikedVideos(user){
@@ -215,10 +230,6 @@ function postNewVideo(){
   .then(newVideo => renderVideoCard(newVideo))
 }
 
-function addVideo(){
-  document.querySelector('#addVideo').classList.remove('d-none')
-}
-
 
 function handleCardClick(video){
   let modal = document.querySelector('#myModal')
@@ -245,10 +256,11 @@ function initYouTubePlayer(){
     // videoId: '',
     events: {
       // 'onReady': onPlayerReady//,
-      //'onStateChange': onPlayerStateChange
+      // 'onStateChange': onPlayerStateChange
     }
   })
 }
+
 
 function initNotesForm(){
   let notesForm = document.createElement('form')

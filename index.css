@@ -178,3 +178,9 @@ p, ol, ul, td {
 #addVideoTab {
   margin-right: 8px
 }
+
+.welcome-font {
+  font-style: oblique;
+  font-size: 20px;
+  color: white;
+}
