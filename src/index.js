@@ -88,43 +88,6 @@ function getUser(username) {
   .then(users => users.find(user => user.username.toLowerCase() === username))
 }
 
-function handleLogin(user){
-  document.querySelector('.welcome-div').innerText = `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`
-  document.querySelector('.welcome-div').id = user.id
-  document.querySelector('.welcome-div').dataset.status = user.status
-
-  const closeModal = () => {
-      $("#login-modal").removeClass("in");
-      $(".modal-backdrop").remove();
-      $("#login-modal").hide();
-    }
-
-    if (user.status === 'instructor') {
-       console.log('is instructor')
-       document.getElementById('addVideo').classList.add('active')
-       document.querySelector('.welcome-div').dataset.name = user.first_name.toLowerCase()
-       closeModal();
-       // renderUserLikedVideos(user);
-       myVideo();
-       addVideo();
-       mod()
-
-     }
-     else if (user.status === 'student'){
-       console.log('is student')
-       closeModal();
-       myVideo();
-       renderUserLikedVideos(user)
-       mod()
-
-     }
-     else {
-       alert('Sorry!')
-     }
-}
-
-
-
 function login(username){
   Promise.all([getUser(username), getAllVideos()])
   .then(r => {
@@ -134,38 +97,42 @@ function login(username){
   .then(renderDeleteButton)
 }
 
-function addVideo(){
-  document.querySelector('#addVideo').classList.remove('d-none')
+function handleLogin(user){
+  document.querySelector('.welcome-div').innerText = `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`
+  document.querySelector('.welcome-div').id = user.id
+  document.querySelector('.welcome-div').dataset.status = user.status
+
+  const closeModal = () => {
+    $("#login-modal").removeClass("in");
+    $(".modal-backdrop").remove();
+    $("#login-modal").hide();
+  }
+
+  if (user.status === 'instructor') {
+    console.log('is instructor')
+    document.getElementById('myVideoTab').classList.remove('show', 'active')
+    document.getElementById('addVideoTab').classList.add('show', 'active')
+    document.querySelector('.welcome-div').dataset.name = user.first_name.toLowerCase()
+    document.getElementById('instructor').value = user.first_name
+    closeModal();
+    // renderUserLikedVideos(user);
+    // myVideo()
+    addVideo();
+    mod()
+
+  }
+  else if (user.status === 'student'){
+    console.log('is student')
+    closeModal();
+    myVideo();
+    renderUserLikedVideos(user)
+    mod()
+
+  }
+  else {
+    alert('Sorry!')
+  }
 }
-
-function myVideo(){
-  document.querySelector('#myVideo').classList.remove('d-none')
-
-  const vidDiv = document.querySelector('#myVideoTab')
-
-  const myVid = document.createElement('h3')
-  vidDiv.prepend(myVid)
-}
-
-function renderUserLikedVideos(user){
-  clearChildNodes(document.querySelector('#myVideoTab'))
-  user.videos.forEach(video => renderMyVideoCard(video))
-}
-
-function mod(){
-  document.querySelector('#mod-1').classList.remove('d-none')
-  document.querySelector('#mod1Tab').classList.remove('d-none')
-
-  document.querySelector('#mod-2').classList.remove('d-none')
-  document.querySelector('#mod2Tab').classList.remove('d-none')
-
-  document.querySelector('#mod-3').classList.remove('d-none')
-  document.querySelector('#mod3Tab').classList.remove('d-none')
-
-  document.querySelector('#mod-4').classList.remove('d-none')
-  document.querySelector('#mod4Tab').classList.remove('d-none')
-}
-
 
 function renderVideoCard(video){
   // take each video, filter by Category
@@ -209,22 +176,72 @@ function renderVideoCard(video){
     }
 }
 
+function addVideo(){
+  document.querySelector('#myVideo').classList.remove('active', 'show')
+  document.querySelector('#addVideo').classList.add('active', 'show')
+  document.querySelector('#addVideo').classList.remove('d-none')
+}
+
+function myVideo(){
+  document.querySelector('#myVideo').classList.remove('d-none')
+
+  const vidDiv = document.querySelector('#myVideoTab')
+
+  const myVid = document.createElement('h3')
+  vidDiv.prepend(myVid)
+}
+
+function renderUserLikedVideos(user){
+  clearChildNodes(document.querySelector('#myVideoTab'))
+  user.videos.forEach(video => renderMyVideoCard(video))
+}
+
+function mod(){
+  document.querySelector('#mod-1').classList.remove('d-none')
+  document.querySelector('#mod1Tab').classList.remove('d-none')
+
+  document.querySelector('#mod-2').classList.remove('d-none')
+  document.querySelector('#mod2Tab').classList.remove('d-none')
+
+  document.querySelector('#mod-3').classList.remove('d-none')
+  document.querySelector('#mod3Tab').classList.remove('d-none')
+
+  document.querySelector('#mod-4').classList.remove('d-none')
+  document.querySelector('#mod4Tab').classList.remove('d-none')
+}
+
+
+
+
 function renderDeleteButton(){
   if (welcomeDiv().dataset.status === "instructor"){
       let cards = document.querySelectorAll(`.${welcomeDiv().dataset.name}`)
       cards.forEach((card) => {
-        deleteBtn = document.createElement('button')
-        deleteBtn.classList.add('vid-del-btn', 'btn')
-        deleteBtn.innerText = `Delete Video`
-        deleteBtn.addEventListener('click', function(e){
+        let deleteBtn = document.createElement('button')
+          deleteBtn.classList.add('vid-del-btn', 'btn')
+          deleteBtn.innerText = `Delete Video`
+          deleteBtn.addEventListener('click', function(e){
           e.stopPropagation()
-          removeVideo(e)
+          handleDeleteButton(e)
         })
         card.appendChild(deleteBtn)
+        deleteBtn.id = `del-btn-${parseId(deleteBtn.parentElement.id)}`
       })
     }
   // vidCard.appendChild(deleteBtn)
   console.log('status = instructor')
+}
+
+function handleDeleteButton(event){
+  let id = parseId(event.target.id)
+  let data = {
+    id: id
+  }
+  fetch(`http://localhost:3000/api/v1/videos/${id}`, {
+    method: "DELETE"
+  })
+  .then(r => r.json())
+  .then(deletedVideo => document.getElementById(`vid-card-${deletedVideo.id}`).remove())
 }
 
 function addToMyList(event){
@@ -336,7 +353,24 @@ function postNewVideo(){
     body: JSON.stringify(data)
   })
   .then(res => res.json())
-  .then(newVideo => renderVideoCard(newVideo))
+  .then((newVideo) => {
+    renderVideoCard(newVideo)
+    renderDeleteBtn(newVideo.id)
+  })
+}
+
+
+
+function renderDeleteBtn(id){
+  let deleteBtn = document.createElement('button')
+    deleteBtn.classList.add('vid-del-btn', 'btn')
+    deleteBtn.innerText = `Delete Video`
+    deleteBtn.id = `del-btn-${id}`
+    deleteBtn.addEventListener('click', function(e){
+    e.stopPropagation()
+    handleDeleteButton(e)
+  })
+  document.getElementById(`vid-card-${id}`).appendChild(deleteBtn)
 }
 
 function addNewNote(){
