@@ -131,7 +131,7 @@ function login(username){
     handleLogin(r[0])
     r[1].forEach(video => renderVideoCard(video))
   })
-  .then(renderDeleteButton())
+  .then(renderDeleteButton)
 }
 
 function addVideo(){
@@ -211,21 +211,20 @@ function renderVideoCard(video){
 
 function renderDeleteButton(){
   if (welcomeDiv().dataset.status === "instructor"){
-    if(vidTitle.innerText.toLowerCase() === welcomeDiv().dataset.name){
-      debugger
-      deleteBtn = document.createElement('button')
-      deleteBtn.classList.add('vid-del-btn', 'btn')
-      deleteBtn.id = `delete-btn-${video.id}`
-      deleteBtn.innerText = `Delete Video`
-      deleteBtn.addEventListener('click', function(e){
-        e.stopPropagation()
-        removeVideo(e)
+      let cards = document.querySelectorAll(`.${welcomeDiv().dataset.name}`)
+      cards.forEach((card) => {
+        deleteBtn = document.createElement('button')
+        deleteBtn.classList.add('vid-del-btn', 'btn')
+        deleteBtn.innerText = `Delete Video`
+        deleteBtn.addEventListener('click', function(e){
+          e.stopPropagation()
+          removeVideo(e)
+        })
+        card.appendChild(deleteBtn)
       })
-      vidCard.appendChild(deleteBtn)
     }
   // vidCard.appendChild(deleteBtn)
   console.log('status = instructor')
-  }
 }
 
 function addToMyList(event){
