@@ -2,30 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
   window.onYouTubeIframeAPIReady = function() {
     console.log('ready to embed YT videos')
 
-    getAllVideos()
+    // getAllVideos()
     initModalXButton()
     initYouTubePlayer()
-  }
-
-  function modal(){
-    return document.querySelector('#myModal')
-  }
-
-  function modalXButton(){
-    return document.getElementsByClassName("close")[0]
-  }
-
-  function initModalXButton(){
-    modalXButton().addEventListener('click', handleXButton)
-  }
-
-  function handleXButton(e){
-    modal().style.display = "none"
-    document.querySelector('.modal-content').src = ''
-  }
-
-  function vidNotesDiv(){
-    return document.querySelector('.vid-notes-div')
   }
 
   function vidNotesDiv(){
@@ -76,10 +55,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
 })
 
+function welcomeDiv(){
+  return document.querySelector('.welcome-div')
+}
+
+function modal(){
+  return document.querySelector('#myModal')
+}
+
+function modalXButton(){
+  return document.getElementsByClassName("close")[0]
+}
+
+function initModalXButton(){
+  modalXButton().addEventListener('click', handleXButton)
+}
+
+function handleXButton(e){
+  modal().style.display = "none"
+  document.querySelector('.video-modal').src = ''
+}
+
+function vidNotesDiv(){
+  return document.querySelector('.vid-notes-div')
+}
+
 function getAllVideos(){
   return fetch('http://localhost:3000/api/v1/videos')
   .then(r => r.json())
-  .then(videos => videos.forEach(video => renderVideoCard(video)))
+  // .then(videos => videos.forEach(video => renderVideoCard(video)))
 }
 
 function getUser(username) {
@@ -95,7 +99,6 @@ function getNotes(){
     notes.forEach(note => renderNote(note))
   })
 }
-
 
 function login(username){
   getUser(username).then(user => {
@@ -129,6 +132,44 @@ function login(username){
       alert('Sorry!')
     }
 
+function handleLogin(user){
+  document.querySelector('.welcome-div').innerText = `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`
+  document.querySelector('.welcome-div').id = user.id
+  document.querySelector('.welcome-div').dataset.status = user.status
+
+  const closeModal = () => {
+      $("#login-modal").removeClass("in");
+      $(".modal-backdrop").remove();
+      $("#login-modal").hide();
+    }
+
+    if (user.status === 'instructor') {
+       console.log('is instructor')
+       closeModal();
+       // renderUserLikedVideos(user);
+       myVideo();
+       addVideo();
+       mod()
+
+     }
+     else if (user.status === 'student'){
+       console.log('is student')
+       closeModal();
+       myVideo();
+       renderUserLikedVideos(user)
+       mod()
+
+     }
+     else {
+       alert('Sorry!')
+     }
+}
+
+function login(username){
+  Promise.all([getUser(username), getAllVideos()])
+  .then(r => {
+    handleLogin(r[0])
+    r[1].forEach(video => renderVideoCard(video))
   })
 }
 
@@ -138,6 +179,9 @@ function addVideo(){
 
 function myVideo(){
   document.querySelector('#myVideo').classList.remove('d-none')
+  const vidDiv = document.querySelector('#myVideoTab')
+  const myVid = document.createElement('h3')
+  vidDiv.prepend(myVid)
 }
 
 function renderUserLikedVideos(user){
@@ -188,26 +232,35 @@ function renderVideoCard(video){
     vidDetails = document.createElement('p')
     vidDetails.innerText = `Instructor: ${video.instructor}`
     vidCard.appendChild(vidDetails)
-
-    // vidAddBtn = document.createElement('div')
-    // vidCard.appendChild(vidAddBtn)
-
+    // debugger
+    if (welcomeDiv().dataset.status === "student"){
     addBtn = document.createElement('button')
     addBtn.classList.add('vid-add-btn', 'btn')
     addBtn.id = `add-btn-${video.id}`
     addBtn.innerText = 'Add To My List'
-
     addBtn.addEventListener('click', function(e){
       e.stopPropagation()
       addToMyList(e)
     })
-    // vidAddBtn.appendChild(addBtn)
     vidCard.appendChild(addBtn)
+    } else if (welcomeDiv().dataset.status === "instructor"){
+      deleteBtn = document.createElement('button')
+      deleteBtn.classList.add('vid-del-btn', 'btn')
+      deleteBtn.id = `delete-btn-${video.id}`
+      deleteBtn.innerText = `Delete Video`
+      deleteBtn.addEventListener('click', function(e){
+        e.stopPropagation()
+        removeVideo(e)
+      })
+    vidCard.appendChild(deleteBtn)
+    console.log('status = instructor')
+    }
 }
 
 function addToMyList(event){
   let id = parseId(event.target.id)
   let data = {'video_id': id}
+  // debugger
   let userID = document.querySelector('.welcome-div').id
     // debugger
     fetch(`http://localhost:3000/api/v1/users/${userID}/videos/add`, {
@@ -220,8 +273,7 @@ function addToMyList(event){
     })
     .then(res => res.json())
     .then(userVideo => {
-      // debugger
-      renderMyVideoCard(userVideo);
+      renderMyVideoCard(userVideo)
     })
 }
 
