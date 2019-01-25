@@ -327,13 +327,12 @@ function removeFromMyList(event){
   .then(id => document.querySelector(`#my-vid-card-${id}`).remove())
 }
 
-
 function postNewVideo(){
   // console.log(video)
   const vidName = document.getElementById('vidName').value
   const vidInstructor = document.getElementById('instructor').value
   const vidDescription = document.getElementById('inputDescription').value
-  const vidYoutubeId = document.getElementById('inputYoutube_id').value
+  const vidYoutubeId = document.getElementById('inputYoutube_id').value.split('=')[1]
   const vidLength = document.getElementById('inputVideoLength').value
   const vidCategory = document.getElementById('inputCategory').value
 
