@@ -36,8 +36,13 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     postNewVideo();
     e.target.reset();
+    document.getElementById('instructor').value = capitalizeString(welcomeDiv().dataset.name)
   })
-  
+
+  function capitalizeString(name){
+    return name.charAt(0).toUpperCase() + name.slice(1)
+  }
+
   let addNoteForm = document.querySelector('.note-form')
   addNoteForm.addEventListener('submit', function(e){
     e.preventDefault();
@@ -329,12 +334,20 @@ function removeFromMyList(event){
   .then(id => document.querySelector(`#my-vid-card-${id}`).remove())
 }
 
+function parseYoutubeId(id){
+  if(id.includes('&')){
+    return id.split('&')[0].split('=')[1]
+  } else if(id.includes('=')){
+    return id.split('=')[1]
+  } else{return id}
+}
+
 function postNewVideo(){
   // console.log(video)
   const vidName = document.getElementById('vidName').value
   const vidInstructor = document.getElementById('instructor').value
   const vidDescription = document.getElementById('inputDescription').value
-  const vidYoutubeId = document.getElementById('inputYoutube_id').value.split('=')[1]
+  const vidYoutubeId = parseYoutubeId(document.getElementById('inputYoutube_id').value)
   const vidLength = document.getElementById('inputVideoLength').value
   const vidCategory = document.getElementById('inputCategory').value
 
@@ -396,7 +409,7 @@ function addNewNote(){
   })
   .then(res => res.json())
   .then(newNote => {
-    
+
     renderNote(newNote)
   })
 }

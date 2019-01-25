@@ -4,13 +4,16 @@
   	  <script src="http://www.youtube.com/iframe_api"></script>
       <script type="text/javascript" src='src/index.js'></script>
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-	  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-
+      <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
       <link href="https://fonts.googleapis.com/css?family=Abel|Roboto|Ubuntu+Condensed" rel="stylesheet">
+      <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
 
     <meta charset="utf-8">
     <title>LearnTube</title>
@@ -80,20 +83,58 @@
 		          	<div class="vid-notes-div">
 		            	<div class="vid-notes-header">My Notes</div>
 		          	</div>
-		          	<div class="note-content">
+		          	<div class="notes-container">
 		          		<form class="note-form">
 		          			<div class="form-row">
 		          				 <div class="form-group col-md-2">
-		          					<input type="text" class="form-control" id="noteTime" placeholder="min(s)">
-		          				</div>
-		          				<div class="form-group col-md-9">
-		          					<input type="text" class="form-control" id="noteContent" placeholder="note text">
+		          					  <input type="text" class="form-control" id="noteTime" placeholder="Timestamp">
+		          				 </div>
+                      <div class="form-group col-md-9">
+		          					  <input type="text" class="form-control" id="noteContent" placeholder="Note Content">
 		          				</div>
 		          				<div class="form-group col-md-1">
-		          					<button type="submit" class="btn btn-secondary">Add Note</button>
+		          					 <button type="submit" class="btn btn-secondary">Add</button>
 		          				</div>
 		          			</div>
-		          		</form>
+                  </form>
+<!-- Notes List -->
+                    <div class="notes-list">
+                      <div class="row">
+                        <div class="col-md-8">
+                            <section class="comment-list">
+                              <!-- Note -->
+                              <article class="row">
+            <div class="col-md-2 col-sm-2 hidden-xs">
+              <figure class="thumbnail">
+                <img class="img-responsive" src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png" />
+                <figcaption class="text-center">username</figcaption>
+              </figure>
+            </div>
+            <div class="col-md-10 col-sm-10">
+              <div class="panel panel-default arrow left">
+                <div class="panel-body">
+                  <header class="text-left">
+                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
+                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
+                  </header>
+                  <div class="comment-post">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                  </div>
+                  <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
+                </div>
+              </div>
+            </div>
+          </article>
+                              <!-- End Note -->
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+<!-- End Notes List -->
+
 		          	</div>
 		        </div>
 		    </div>
@@ -130,7 +171,7 @@
 						  </div>
 						  <div class="form-row">
 						    <div class="form-group col-md-4">
-						      <label for="inputCity">Video ID</label>
+						      <label for="inputCity">Video URL</label>
 						      <input type="text" class="form-control" id="inputYoutube_id" placeholder = "youtube.com/watch?v=ID">
 						    </div>
 						    <div class="form-group col-md-4">

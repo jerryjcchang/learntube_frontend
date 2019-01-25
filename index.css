@@ -168,7 +168,7 @@ body {
 
 .vid-notes-div {
   margin-top: 15px;
-  border-bottom: 2px solid lightgrey;
+  /* border-bottom: 2px solid lightgrey; */
   width: 50%;
 }
 
@@ -230,4 +230,8 @@ body {
   font-size: 20px;
   color: lightgrey;
 /*  margin-top: 8px;*/
+}
+
+.comment-post{
+  
 }
