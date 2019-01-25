@@ -7,13 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initYouTubePlayer()
   }
 
-  function vidNotesDiv(){
-    return document.querySelector('.vid-notes-div')
-  }
 
-  function welcomeDiv(){
-    return document.querySelector('.welcome-div')
-  }
+
+
 
   function onPlayerReady(event) {
     isReady = true;
@@ -43,13 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
   addVideoForm.addEventListener('submit', function(e){
     e.preventDefault();
     postNewVideo();
-    e.target.reset();
-  })
-
-  let addNoteForm = document.querySelector('.note-form')
-  addNoteForm.addEventListener('submit', function(e){
-    e.preventDefault();
-    addNewNote();
     e.target.reset();
   })
 
@@ -92,46 +81,6 @@ function getUser(username) {
   .then(users => users.find(user => user.username.toLowerCase() === username))
 }
 
-function getNotes(){
-  return fetch('http://localhost:3000/api/v1/notes')
-  .then(r => r.json())
-  .then(notes => {
-    notes.forEach(note => renderNote(note))
-  })
-}
-
-function login(username){
-  getUser(username).then(user => {
-    if (user){
-      document.querySelector('.welcome-div').innerText = `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`
-      document.querySelector('.welcome-div').id = user.id
-     
-      const closeModal = () => {
-        $("#login-modal").removeClass("in");
-        $(".modal-backdrop").remove();
-        $("#login-modal").hide();
-      }
-
-      if (user.status === 'instructor') {
-        console.log('is instructor')
-        closeModal();
-        renderUserLikedVideos(user);
-        myVideo();
-        addVideo();
-        mod();
-      }
-      else if (user.status === 'student'){
-        console.log('is student')
-        closeModal();
-        myVideo();
-        renderUserLikedVideos(user)
-        mod()
-      }
-    }
-    else if(!user){
-      alert('Sorry!')
-    }
-
 function handleLogin(user){
   document.querySelector('.welcome-div').innerText = `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`
   document.querySelector('.welcome-div').id = user.id
@@ -145,6 +94,8 @@ function handleLogin(user){
 
     if (user.status === 'instructor') {
        console.log('is instructor')
+       document.getElementById('addVideo').classList.add('active')
+       document.getElementById('')
        closeModal();
        // renderUserLikedVideos(user);
        myVideo();
@@ -164,6 +115,8 @@ function handleLogin(user){
        alert('Sorry!')
      }
 }
+
+
 
 function login(username){
   Promise.all([getUser(username), getAllVideos()])
@@ -205,6 +158,7 @@ function mod(){
   document.querySelector('#mod4Tab').classList.remove('d-none')
 }
 
+
 function renderVideoCard(video){
   // take each video, filter by Category
   // set tabId based on category
@@ -218,7 +172,6 @@ function renderVideoCard(video){
 // COMMENT BACK IN TO ENABLE MODAL //
     vidCard.addEventListener('click', (e) => {
       handleCardClick(video)
-      
     })
     modContainer.prepend(vidCard)
 
@@ -368,9 +321,7 @@ function postNewVideo(){
     body: JSON.stringify(data)
   })
   .then(res => res.json())
-  .then(newVideo => {
-    renderVideoCard(newVideo)
-  })
+  .then(newVideo => renderVideoCard(newVideo))
 }
 
 function addNewNote(){
@@ -397,6 +348,7 @@ function addNewNote(){
   })
   .then(res => res.json())
   .then(newNote => {
+    debugger
     renderNote(newNote)
   })
 }
@@ -417,13 +369,15 @@ function renderNote(note){
 }
 
 function handleCardClick(video){
-
   let modal = document.querySelector('#myModal')
   let modalContent = document.querySelector('.video-modal')
   modal.style.display = "block"
   modalContent.src = `http://www.youtube.com/embed/${video.youtube_id}`
   document.querySelector('.video-header').innerText = `${video.name} (${video.instructor})`
-  document.querySelector('.video-header').id = video.id
+  // $('#myModal').on('hidden.bs.modal', function () {
+  //   debugger
+  //   player.stopVideo()
+  // })
 }
 
 function clearChildNodes(node){
@@ -454,4 +408,5 @@ function initNotesForm(){
 function parseId(id){
     return id.split('-')[id.split('-').length-1]
 }
+
 
