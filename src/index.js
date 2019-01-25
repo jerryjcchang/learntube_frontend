@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     postNewVideo();
     e.target.reset();
   })
+  
   let addNoteForm = document.querySelector('.note-form')
   addNoteForm.addEventListener('submit', function(e){
     e.preventDefault();
@@ -102,14 +103,16 @@ function handleLogin(user){
     }
     $('#invalid-user').hide() // hide bootstrap-alert after incorrect login
     if (user.status === 'instructor') {
-       console.log('is instructor')
-       document.getElementById('addVideo').classList.add('active')
-       document.getElementById('')
-       closeModal();
-       // renderUserLikedVideos(user);
-       myVideo();
-       addVideo();
-       mod()
+      console.log('is instructor')
+      document.getElementById('myVideoTab').classList.remove('show', 'active')
+      document.getElementById('addVideoTab').classList.add('show', 'active')
+      document.querySelector('.welcome-div').dataset.name = user.first_name.toLowerCase()
+      document.getElementById('instructor').value = user.first_name
+      closeModal();
+      // renderUserLikedVideos(user);
+      // myVideo()
+      addVideo();
+      mod()
 
      }
      else if (user.status === 'student'){
@@ -127,17 +130,60 @@ function handleLogin(user){
 
 }
 
-
-
 function login(username){
   Promise.all([getUser(username), getAllVideos()])
   .then(r => {
     handleLogin(r[0])
     r[1].forEach(video => renderVideoCard(video))
   })
+  .then(renderDeleteButton)
+}
+
+function renderVideoCard(video){
+  // take each video, filter by Category
+  // set tabId based on category
+  // render video divs to category
+  let modContainer = document.querySelector(`#${video.category.replace(/\s/g, '').toLowerCase()}Tab`);
+    // debugger
+    vidCard = document.createElement('div')
+    vidCard.id = `vid-card-${video.id}`
+    vidCard.classList.add('vid-preview-card', `${video.instructor.toLowerCase()}`)
+    modContainer.appendChild(vidCard)
+// COMMENT BACK IN TO ENABLE MODAL //
+    vidCard.addEventListener('click', (e) => {
+      handleCardClick(video)
+    })
+    modContainer.prepend(vidCard)
+
+    vidImg = document.createElement('img')
+    vidImg.src = `https://img.youtube.com/vi/${video.youtube_id}/1.jpg`
+    vidCard.appendChild(vidImg)
+
+    vidTitle = document.createElement('div')
+    vidTitle.classList.add('vid-title')
+    vidTitle.innerText = video.name
+    vidCard.appendChild(vidTitle)
+
+    vidDetails = document.createElement('p')
+    vidDetails.innerText = `Instructor: ${video.instructor}`
+    vidCard.appendChild(vidDetails)
+    // debugger
+    if (welcomeDiv().dataset.status === "student"){
+    addBtn = document.createElement('button')
+    addBtn.classList.add('vid-add-btn', 'btn')
+    addBtn.id = `add-btn-${video.id}`
+    addBtn.innerText = 'Add To My List'
+    addBtn.addEventListener('click', function(e){
+      e.stopPropagation()
+      addToMyList(e)
+    })
+    vidCard.appendChild(addBtn)
+    }
 }
 
 function addVideo(){
+  document.querySelector('#myVideo').classList.remove('active', 'show')
+  document.querySelector('#addVideo').classList.add('active', 'show')
   document.querySelector('#addVideo').classList.remove('d-none')
 }
 
@@ -169,58 +215,35 @@ function mod(){
   document.querySelector('#mod4Tab').classList.remove('d-none')
 }
 
-
-function renderVideoCard(video){
-  // take each video, filter by Category
-  // set tabId based on category
-  // render video divs to category
-  let modContainer = document.querySelector(`#${video.category.replace(/\s/g, '').toLowerCase()}Tab`);
-    // debugger
-    vidCard = document.createElement('div')
-    vidCard.id = `vid-card-${video.id}`
-    vidCard.classList.add('vid-preview-card')
-    modContainer.appendChild(vidCard)
-// COMMENT BACK IN TO ENABLE MODAL //
-    vidCard.addEventListener('click', (e) => {
-      handleCardClick(video)
-    })
-    modContainer.prepend(vidCard)
-
-    vidImg = document.createElement('img')
-    vidImg.src = `https://img.youtube.com/vi/${video.youtube_id}/1.jpg`
-    vidCard.appendChild(vidImg)
-
-    vidTitle = document.createElement('div')
-    vidTitle.classList.add('vid-title')
-    vidTitle.innerText = video.name
-    vidCard.appendChild(vidTitle)
-
-    vidDetails = document.createElement('p')
-    vidDetails.innerText = `Instructor: ${video.instructor}`
-    vidCard.appendChild(vidDetails)
-    // debugger
-    if (welcomeDiv().dataset.status === "student"){
-    addBtn = document.createElement('button')
-    addBtn.classList.add('vid-add-btn', 'btn')
-    addBtn.id = `add-btn-${video.id}`
-    addBtn.innerText = 'Add To My List'
-    addBtn.addEventListener('click', function(e){
-      e.stopPropagation()
-      addToMyList(e)
-    })
-    vidCard.appendChild(addBtn)
-    } else if (welcomeDiv().dataset.status === "instructor"){
-      deleteBtn = document.createElement('button')
-      deleteBtn.classList.add('vid-del-btn', 'btn')
-      deleteBtn.id = `delete-btn-${video.id}`
-      deleteBtn.innerText = `Delete Video`
-      deleteBtn.addEventListener('click', function(e){
-        e.stopPropagation()
-        removeVideo(e)
+function renderDeleteButton(){
+  if (welcomeDiv().dataset.status === "instructor"){
+      let cards = document.querySelectorAll(`.${welcomeDiv().dataset.name}`)
+      cards.forEach((card) => {
+        let deleteBtn = document.createElement('button')
+          deleteBtn.classList.add('vid-del-btn', 'btn')
+          deleteBtn.innerText = `Delete Video`
+          deleteBtn.addEventListener('click', function(e){
+          e.stopPropagation()
+          handleDeleteButton(e)
+        })
+        card.appendChild(deleteBtn)
+        deleteBtn.id = `del-btn-${parseId(deleteBtn.parentElement.id)}`
       })
-    vidCard.appendChild(deleteBtn)
-    console.log('status = instructor')
     }
+  // vidCard.appendChild(deleteBtn)
+  console.log('status = instructor')
+}
+
+function handleDeleteButton(event){
+  let id = parseId(event.target.id)
+  let data = {
+    id: id
+  }
+  fetch(`http://localhost:3000/api/v1/videos/${id}`, {
+    method: "DELETE"
+  })
+  .then(r => r.json())
+  .then(deletedVideo => document.getElementById(`vid-card-${deletedVideo.id}`).remove())
 }
 
 function addToMyList(event){
@@ -306,13 +329,12 @@ function removeFromMyList(event){
   .then(id => document.querySelector(`#my-vid-card-${id}`).remove())
 }
 
-
 function postNewVideo(){
   // console.log(video)
   const vidName = document.getElementById('vidName').value
   const vidInstructor = document.getElementById('instructor').value
   const vidDescription = document.getElementById('inputDescription').value
-  const vidYoutubeId = document.getElementById('inputYoutube_id').value
+  const vidYoutubeId = document.getElementById('inputYoutube_id').value.split('=')[1]
   const vidLength = document.getElementById('inputVideoLength').value
   const vidCategory = document.getElementById('inputCategory').value
 
@@ -332,7 +354,22 @@ function postNewVideo(){
     body: JSON.stringify(data)
   })
   .then(res => res.json())
-  .then(newVideo => renderVideoCard(newVideo))
+  .then((newVideo) => {
+    renderVideoCard(newVideo)
+    renderDeleteBtn(newVideo.id)
+  })
+}
+
+function renderDeleteBtn(id){
+  let deleteBtn = document.createElement('button')
+    deleteBtn.classList.add('vid-del-btn', 'btn')
+    deleteBtn.innerText = `Delete Video`
+    deleteBtn.id = `del-btn-${id}`
+    deleteBtn.addEventListener('click', function(e){
+    e.stopPropagation()
+    handleDeleteButton(e)
+  })
+  document.getElementById(`vid-card-${id}`).appendChild(deleteBtn)
 }
 
 function addNewNote(){
@@ -366,7 +403,7 @@ function addNewNote(){
 
 function renderNote(note){
   console.log(note)
-  
+
   const noteContainer = document.querySelector('.note-content')
 
   const noteDiv = document.createElement('div')
@@ -403,10 +440,7 @@ function handleCardClick(video){
   document.querySelector('.video-header').innerText = ` ${video.name} (${video.instructor})`
   document.querySelector('#video-id').value = video.id
   getUserNotes(video);
-  // $('#myModal').on('hidden.bs.modal', function () {
-  //   debugger
-  //   player.stopVideo()
-  // })
+
 }
 
 function clearChildNodes(node){
@@ -437,5 +471,3 @@ function initNotesForm(){
 function parseId(id){
     return id.split('-')[id.split('-').length-1]
 }
-
-
