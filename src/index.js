@@ -325,7 +325,7 @@ function postNewVideo(){
 }
 
 function addNewNote(){
-
+  //change int to float in the table
   let userId = document.querySelector('.welcome-div').id
   let videoId =  document.querySelector('.video-header').id
   let inputTime = document.getElementById('noteTime').value
