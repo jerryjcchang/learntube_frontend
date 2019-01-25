@@ -414,19 +414,31 @@ function addNewNote(){
   })
 }
 
+// <div class="note-div">
+// <header>20:15</header>
+// <p class="note-text">This dude needs to go to a doctor</p>
+// </div>
+
 function renderNote(note){
   console.log(note)
 
-  const noteContainer = document.querySelector('.note-content')
+  let notesContentDiv = document.querySelector('.notes-content')
 
-  const noteDiv = document.createElement('div')
+  let noteDiv = document.createElement('div')
   noteDiv.id = `note-${note.id}`
-  noteDiv.classList.add('note-card')
-  noteContainer.appendChild(noteDiv)
+  noteDiv.classList.add('note-div')
 
-  const showNote = document.createElement('h4')
-  showNote.innerText = `${note.timestamp} : ${note.content}`
-  noteDiv.appendChild(showNote)
+
+  let noteHeader = document.createElement('header')
+  noteHeader.innerText = note.timestamp
+  noteDiv.appendChild(noteHeader)
+
+  let noteText = document.createElement('p')
+  noteText.innerText = note.content
+  noteText.classList.add('note-text')
+  noteDiv.appendChild(noteText)
+
+  notesContentDiv.prepend(noteDiv)
 }
 
 function getUserNotes(video) {
