@@ -179,7 +179,9 @@ function addVideo(){
 
 function myVideo(){
   document.querySelector('#myVideo').classList.remove('d-none')
+
   const vidDiv = document.querySelector('#myVideoTab')
+
   const myVid = document.createElement('h3')
   vidDiv.prepend(myVid)
 }
@@ -451,5 +453,5 @@ function initNotesForm(){
 
 function parseId(id){
     return id.split('-')[id.split('-').length-1]
-  }
+}
 
