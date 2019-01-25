@@ -25,6 +25,7 @@
     <div class="welcome-div"></div>
 	</nav>
   	<div class="container-fluid">
+  		<div id="invalid-user" class="alert alert-danger text-center" style="display:none">Please enter valid username!</div>
   		<div class="row tab-spacer">
   			<div class="col-sm-6 scroll">
   				<ul class="nav nav-tabs">
@@ -73,6 +74,7 @@
 		        	<span class="close">&times</span>
 		          	<div class="video-header">
 		          	</div>
+		          	<input id="video-id" value="" hidden>
 		          	<div class="modal-content video-modal">
 		          	</div>
 		          	<div class="vid-notes-div">
@@ -82,12 +84,10 @@
 		          		<form class="note-form">
 		          			<div class="form-row">
 		          				 <div class="form-group col-md-2">
-		          					<label for="inputTime">Time</label>
 		          					<input type="text" class="form-control" id="noteTime" placeholder="min(s)">
 		          				</div>
 		          				<div class="form-group col-md-9">
-		          					<label for="inputNote">Note</label>
-		          					<input type="text" class="form-control" id="noteContent" placeholder="">
+		          					<input type="text" class="form-control" id="noteContent" placeholder="note text">
 		          				</div>
 		          				<div class="form-group col-md-1">
 		          					<button type="submit" class="btn btn-secondary">Add Note</button>

@@ -138,6 +138,7 @@ body {
   /* border: 1px solid #888; */
   width: 50%;
   height: 80%;
+  overflow: scroll;
 }
 
 .video-header {

@@ -7,10 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initYouTubePlayer()
   }
 
-
-
-
-
   function onPlayerReady(event) {
     isReady = true;
   }
@@ -41,6 +37,12 @@ document.addEventListener('DOMContentLoaded', function() {
     postNewVideo();
     e.target.reset();
   })
+  let addNoteForm = document.querySelector('.note-form')
+  addNoteForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    addNewNote();
+    e.target.reset();
+  })
 
 })
 
@@ -60,9 +62,15 @@ function initModalXButton(){
   modalXButton().addEventListener('click', handleXButton)
 }
 
+function clearNotes(){
+  const notesToRemove = document.querySelectorAll('.note-content .note-card');
+  notesToRemove.forEach(note => note.remove())
+}
+
 function handleXButton(e){
   modal().style.display = "none"
   document.querySelector('.video-modal').src = ''
+  clearNotes();
 }
 
 function vidNotesDiv(){
@@ -82,16 +90,17 @@ function getUser(username) {
 }
 
 function handleLogin(user){
-  document.querySelector('.welcome-div').innerText = `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`
-  document.querySelector('.welcome-div').id = user.id
-  document.querySelector('.welcome-div').dataset.status = user.status
+  if (user){
+    document.querySelector('.welcome-div').innerText = `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`
+    document.querySelector('.welcome-div').id = user.id
+    document.querySelector('.welcome-div').dataset.status = user.status
 
-  const closeModal = () => {
+    const closeModal = () => {
       $("#login-modal").removeClass("in");
       $(".modal-backdrop").remove();
       $("#login-modal").hide();
     }
-
+    $('#invalid-user').hide() // hide bootstrap-alert after incorrect login
     if (user.status === 'instructor') {
        console.log('is instructor')
        document.getElementById('addVideo').classList.add('active')
@@ -111,9 +120,11 @@ function handleLogin(user){
        mod()
 
      }
-     else {
-       alert('Sorry!')
-     }
+  }
+  else {
+    $('#invalid-user').show()
+  }
+
 }
 
 
@@ -327,7 +338,7 @@ function postNewVideo(){
 function addNewNote(){
   //change int to float in the table
   let userId = document.querySelector('.welcome-div').id
-  let videoId =  document.querySelector('.video-header').id
+  let videoId =  document.querySelector('#video-id').value
   let inputTime = document.getElementById('noteTime').value
   let inputContent = document.getElementById('noteContent').value
 
@@ -348,7 +359,7 @@ function addNewNote(){
   })
   .then(res => res.json())
   .then(newNote => {
-    debugger
+    
     renderNote(newNote)
   })
 }
@@ -368,12 +379,30 @@ function renderNote(note){
   noteDiv.appendChild(showNote)
 }
 
+function getUserNotes(video) {
+  const userId = welcomeDiv().id
+  const videoId = video.id
+  fetch(`http://localhost:3000/api/v1/notes/${userId}/${videoId}`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+  })
+  .then(res => res.json())
+  .then(notes => {
+    notes.forEach(note => renderNote(note))
+  })
+}
+
 function handleCardClick(video){
   let modal = document.querySelector('#myModal')
   let modalContent = document.querySelector('.video-modal')
   modal.style.display = "block"
   modalContent.src = `http://www.youtube.com/embed/${video.youtube_id}`
-  document.querySelector('.video-header').innerText = `${video.name} (${video.instructor})`
+  document.querySelector('.video-header').innerText = ` ${video.name} (${video.instructor})`
+  document.querySelector('#video-id').value = video.id
+  getUserNotes(video);
   // $('#myModal').on('hidden.bs.modal', function () {
   //   debugger
   //   player.stopVideo()
