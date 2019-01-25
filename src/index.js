@@ -116,7 +116,6 @@ function login(username){
         myVideo();
         addVideo();
         mod();
-
       }
       else if (user.status === 'student'){
         console.log('is student')
