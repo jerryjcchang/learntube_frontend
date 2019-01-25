@@ -42,6 +42,13 @@ document.addEventListener('DOMContentLoaded', function() {
     e.target.reset();
   })
 
+  let addNoteForm = document.querySelector('.note-form')
+  addNoteForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    addNewNote();
+    e.target.reset();
+  })
+
 })
 
 function welcomeDiv(){
@@ -95,7 +102,7 @@ function handleLogin(user){
     if (user.status === 'instructor') {
        console.log('is instructor')
        document.getElementById('addVideo').classList.add('active')
-       document.getElementById('')
+       document.querySelector('.welcome-div').dataset.name = user.first_name.toLowerCase()
        closeModal();
        // renderUserLikedVideos(user);
        myVideo();
@@ -124,6 +131,7 @@ function login(username){
     handleLogin(r[0])
     r[1].forEach(video => renderVideoCard(video))
   })
+  .then(renderDeleteButton())
 }
 
 function addVideo(){
@@ -167,7 +175,7 @@ function renderVideoCard(video){
     // debugger
     vidCard = document.createElement('div')
     vidCard.id = `vid-card-${video.id}`
-    vidCard.classList.add('vid-preview-card')
+    vidCard.classList.add('vid-preview-card', `${video.instructor.toLowerCase()}`)
     modContainer.appendChild(vidCard)
 // COMMENT BACK IN TO ENABLE MODAL //
     vidCard.addEventListener('click', (e) => {
@@ -198,7 +206,13 @@ function renderVideoCard(video){
       addToMyList(e)
     })
     vidCard.appendChild(addBtn)
-    } else if (welcomeDiv().dataset.status === "instructor"){
+    }
+}
+
+function renderDeleteButton(){
+  if (welcomeDiv().dataset.status === "instructor"){
+    if(vidTitle.innerText.toLowerCase() === welcomeDiv().dataset.name){
+      debugger
       deleteBtn = document.createElement('button')
       deleteBtn.classList.add('vid-del-btn', 'btn')
       deleteBtn.id = `delete-btn-${video.id}`
@@ -207,9 +221,11 @@ function renderVideoCard(video){
         e.stopPropagation()
         removeVideo(e)
       })
-    vidCard.appendChild(deleteBtn)
-    console.log('status = instructor')
+      vidCard.appendChild(deleteBtn)
     }
+  // vidCard.appendChild(deleteBtn)
+  console.log('status = instructor')
+  }
 }
 
 function addToMyList(event){
@@ -355,7 +371,7 @@ function addNewNote(){
 
 function renderNote(note){
   console.log(note)
-  
+
   const noteContainer = document.querySelector('.note-content')
 
   const noteDiv = document.createElement('div')
@@ -408,5 +424,3 @@ function initNotesForm(){
 function parseId(id){
     return id.split('-')[id.split('-').length-1]
 }
-
-
