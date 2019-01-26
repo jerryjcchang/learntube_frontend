@@ -339,6 +339,8 @@ function parseYoutubeId(id){
     return id.split('&')[0].split('=')[1]
   } else if(id.includes('=')){
     return id.split('=')[1]
+  } else if(id.includes('/')){
+    return id.split('/')[3]
   } else{return id}
 }
 
