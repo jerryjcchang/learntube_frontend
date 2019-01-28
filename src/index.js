@@ -64,13 +64,16 @@ function modalXButton(){
   return document.getElementsByClassName("close")[0]
 }
 
+function notesContentDiv(){
+  return document.querySelector('.notes-content')
+}
+
 function initModalXButton(){
   modalXButton().addEventListener('click', handleXButton)
 }
 
 function clearNotes(){
-  const notesToRemove = document.querySelectorAll('.notes-content');
-  notesToRemove.forEach(note => note.remove())
+  clearChildNodes(notesContentDiv())
 }
 
 function handleXButton(e){
@@ -236,7 +239,7 @@ function renderDeleteButton(){
       })
     }
   // vidCard.appendChild(deleteBtn)
-  console.log('status = instructor')
+  // console.log('status = instructor')
 }
 
 function handleDeleteButton(event){
@@ -422,8 +425,6 @@ function addNewNote(){
 // </div>
 
 function renderNote(note){
-  console.log(note)
-
   let notesContentDiv = document.querySelector('.notes-content')
 
   let noteDiv = document.createElement('div')
@@ -444,6 +445,7 @@ function renderNote(note){
 }
 
 function getUserNotes(video) {
+  console.log(video)
   const userId = welcomeDiv().id
   const videoId = video.id
   fetch(`http://localhost:3000/api/v1/notes/${userId}/${videoId}`, {
