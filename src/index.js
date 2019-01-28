@@ -1,11 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
-  window.onYouTubeIframeAPIReady = function() {
-    console.log('ready to embed YT videos')
 
+  initModalXButton()
+
+  var tag = document.createElement('script');
     // getAllVideos()
-    initModalXButton()
-    initYouTubePlayer()
-  }
+
+  // initYouTubePlayer()
+  tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
   function onPlayerReady(event) {
     isReady = true;
@@ -52,12 +55,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
 })
 
+var player
+
+function onYouTubeIframeAPIReady(id) {
+  player = new YT.Player('player', {
+    height: '100%',
+    width: '100%',
+    videoId: id,
+    events: {
+      // 'onReady': onPlayerReady,
+      // 'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
 function welcomeDiv(){
   return document.querySelector('.welcome-div')
 }
 
 function modal(){
-  return document.querySelector('#myModal')
+  return document.querySelector('#video-modal')
 }
 
 function modalXButton(){
@@ -78,8 +95,9 @@ function clearNotes(){
 
 function handleXButton(e){
   modal().style.display = "none"
-  document.querySelector('.video-modal').src = ''
+  // document.querySelector('.video-modal').src = ''
   clearNotes();
+  player.pauseVideo()
 }
 
 function vidNotesDiv(){
@@ -462,12 +480,15 @@ function getUserNotes(video) {
 }
 
 function handleCardClick(video){
-  let modal = document.querySelector('#myModal')
-  let modalContent = document.querySelector('.video-modal')
-  modal.style.display = "block"
-  modalContent.src = `http://www.youtube.com/embed/${video.youtube_id}`
+  // let modalContent = document.querySelector('.video-modal')
+  modal().style.display = "block"
+  // modalContent.src = `http://www.youtube.com/embed/${video.youtube_id}`
   document.querySelector('.video-header').innerText = ` ${video.name} (${video.instructor})`
   document.querySelector('#video-id').value = video.id
+  player.loadVideoById({videoId:video.youtube_id})
+  document.getElementById('noteTime').addEventListener('click', function(){
+    document.getElementById('noteTime').value = convertTime(player.getCurrentTime())
+  })
   getUserNotes(video);
 
 }
@@ -478,17 +499,17 @@ function clearChildNodes(node){
     }
 }
 
-function initYouTubePlayer(){
-  player = new YT.Player(document.querySelector('.video-modal'), {
-    height: '60%',
-    width: '85%',
-    // videoId: '',
-    events: {
-      // 'onReady': onPlayerReady//,
-      // 'onStateChange': onPlayerStateChange
-    }
-  })
-}
+// function initYouTubePlayer(){
+//   player = new YT.Player(document.querySelector('.video-modal'), {
+//     height: '60%',
+//     width: '85%',
+//     // videoId: '',
+//     events: {
+//       // 'onReady': onPlayerReady//,
+//       // 'onStateChange': onPlayerStateChange
+//     }
+//   })
+// }
 
 
 function initNotesForm(){
@@ -500,3 +521,27 @@ function initNotesForm(){
 function parseId(id){
     return id.split('-')[id.split('-').length-1]
 }
+
+function convertTime(seconds){
+  let h = Math.floor(seconds / 3600)
+  let m = Math.floor(seconds % 3600 / 60)
+  let s = Math.floor(seconds % 3600 % 60)
+
+  if (h < 10) {h = "0"+h}
+  if (m < 10) {m = "0"+m}
+  if (s < 10) {s = "0"+s}
+
+  return (h>0 ? h+":"+m+":"+s : m+":"+s)
+}
+
+// String.prototype.toHHMMSS = function () {
+//     var sec_num = parseInt(this, 10); // don't forget the second param
+//     var hours   = Math.floor(sec_num / 3600);
+//     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+//     var seconds = sec_num - (hours * 3600) - (minutes * 60);
+//
+//     if (hours   < 10) {hours   = "0"+hours;}
+//     if (minutes < 10) {minutes = "0"+minutes;}
+//     if (seconds < 10) {seconds = "0"+seconds;}
+//     return hours+':'+minutes+':'+seconds;
+// }

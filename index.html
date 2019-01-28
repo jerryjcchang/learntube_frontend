@@ -69,16 +69,20 @@
 			  	</div>
 			</div>
 
-	        <div id="myModal" class="modal modal2">
+	        <div id="video-modal" class="modal modal2">
 		        <div class="modal-container">
 
 		          	<div class="video-header-div">
                 <span class="close">&times</span>
-                <header class="video-header"></header>
+                <header id="video-id" value="" class="video-header"></header>
 		          	</div>
-		          	<input id="video-id" value="" hidden>
-		          	<div class="modal-content video-modal">
-		          	</div>
+                <input  hidden>
+		          	<!-- <div  class="modal-content video-modal"> -->
+                  <!-- YT Iframe -->
+                <div id="video-container">
+                  <div id="player"></div>
+                </div>
+		          	<!-- </div> -->
 		          	<div class="vid-notes-div">
 		            	<div class="vid-notes-header">My Notes</div>
 		          	  <!-- <div class="notes-container"> -->
