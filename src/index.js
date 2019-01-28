@@ -69,7 +69,7 @@ function initModalXButton(){
 }
 
 function clearNotes(){
-  const notesToRemove = document.querySelectorAll('.note-content .note-card');
+  const notesToRemove = document.querySelectorAll('.notes-content');
   notesToRemove.forEach(note => note.remove())
 }
 
