@@ -14,14 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
     isReady = true;
   }
 
-  const BASEURL = 'https://learntube-backend.herokuapp.com/api/v1'
-  const USERURL = BASEURL+'/users'
-  const VIDEOSURL = BASEURL+'/videos'
-  const NOTESURL = BASEURL+'/notes'
-
   function videoLoaded (){
     if (isReady) {
-        console.log("ready and play")
+        // console.log("ready and play")
         poster.hide();
         video.show();
 
@@ -59,6 +54,11 @@ document.addEventListener('DOMContentLoaded', function() {
   })
 
 })
+
+const BASEURL = 'https://learntube-backend.herokuapp.com/api/v1'
+const USERSURL = BASEURL+'/users'
+const VIDEOSURL = BASEURL+'/videos'
+const NOTESURL = BASEURL+'/notes'
 
 var player
 
@@ -111,7 +111,7 @@ function vidNotesDiv(){
 }
 
 function getAllVideos(){
-  return fetch(BASEURL+`/api/v1/videos`)
+  return fetch(VIDEOSURL)
   .then(r => r.json())
   // .then(videos => videos.forEach(video => renderVideoCard(video)))
 }
@@ -135,7 +135,7 @@ function handleLogin(user){
     }
     $('#invalid-user').hide() // hide bootstrap-alert after incorrect login
     if (user.status === 'instructor') {
-      console.log('is instructor')
+      // console.log('is instructor')
       document.getElementById('myVideoTab').classList.remove('show', 'active')
       document.getElementById('addVideoTab').classList.add('show', 'active')
       document.querySelector('.welcome-div').dataset.name = user.first_name.toLowerCase()
@@ -148,7 +148,7 @@ function handleLogin(user){
 
      }
      else if (user.status === 'student'){
-       console.log('is student')
+       // console.log('is student')
        closeModal();
        myVideo();
        renderUserLikedVideos(user)
@@ -303,7 +303,7 @@ function addToMyList(event){
 }
 
 function renderMyVideoCard(video){
-  console.log(video)
+  // console.log(video)
   const myVidTab = document.querySelector('#myVideoTab')
 
       let vidCard = document.createElement('div')
@@ -477,7 +477,7 @@ function renderNote(note){
 }
 
 function getUserNotes(video) {
-  console.log(video)
+  // console.log(video)
   const userId = welcomeDiv().id
   const videoId = video.id
   fetch(NOTESURL+`/${userId}/${videoId}`, {
