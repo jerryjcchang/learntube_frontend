@@ -14,6 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
     isReady = true;
   }
 
+  const BASEURL = 'https://learntube-backend.herokuapp.com/api/v1'
+  const USERURL = BASEURL+'/users'
+  const VIDEOSURL = BASEURL+'/videos'
+  const NOTESURL = BASEURL+'/notes'
+
   function videoLoaded (){
     if (isReady) {
         console.log("ready and play")
@@ -62,6 +67,7 @@ function onYouTubeIframeAPIReady(id) {
     height: '100%',
     width: '100%',
     videoId: id,
+    playerVars: {rel: 0, showinfo: 0, ecver: 2},
     events: {
       // 'onReady': onPlayerReady,
       // 'onStateChange': onPlayerStateChange
@@ -105,13 +111,13 @@ function vidNotesDiv(){
 }
 
 function getAllVideos(){
-  return fetch('http://localhost:3000/api/v1/videos')
+  return fetch(BASEURL+`/api/v1/videos`)
   .then(r => r.json())
   // .then(videos => videos.forEach(video => renderVideoCard(video)))
 }
 
 function getUser(username) {
-  return fetch('http://localhost:3000/api/v1/users')
+  return fetch(USERSURL)
   .then(r => r.json())
   .then(users => users.find(user => user.username.toLowerCase() === username))
 }
@@ -181,18 +187,22 @@ function renderVideoCard(video){
     })
     modContainer.prepend(vidCard)
 
-    vidImg = document.createElement('img')
+    let vidImg = document.createElement('img')
     vidImg.src = `https://img.youtube.com/vi/${video.youtube_id}/1.jpg`
     vidCard.appendChild(vidImg)
 
-    vidTitle = document.createElement('div')
+    let vidDetails = document.createElement('div')
+    vidDetails.classList.add('vid-details')
+    vidCard.appendChild(vidDetails)
+
+    let vidTitle = document.createElement('div')
     vidTitle.classList.add('vid-title')
     vidTitle.innerText = video.name
-    vidCard.appendChild(vidTitle)
+    vidDetails.appendChild(vidTitle)
 
-    vidDetails = document.createElement('p')
-    vidDetails.innerText = `Instructor: ${video.instructor}`
-    vidCard.appendChild(vidDetails)
+    let vidInstructor = document.createElement('p')
+    vidInstructor.innerText = `Instructor: ${video.instructor}`
+    vidDetails.appendChild(vidInstructor)
     // debugger
     if (welcomeDiv().dataset.status === "student"){
     addBtn = document.createElement('button')
@@ -265,7 +275,7 @@ function handleDeleteButton(event){
   let data = {
     id: id
   }
-  fetch(`http://localhost:3000/api/v1/videos/${id}`, {
+  fetch(VIDEOSURL+`/${id}`, {
     method: "DELETE"
   })
   .then(r => r.json())
@@ -278,7 +288,7 @@ function addToMyList(event){
   // debugger
   let userID = document.querySelector('.welcome-div').id
     // debugger
-    fetch(`http://localhost:3000/api/v1/users/${userID}/videos/add`, {
+    fetch(USERSURL+`/${userID}/videos/add`, {
       method: 'PATCH',
       headers: {
         "Content-Type": "application/json",
@@ -296,7 +306,7 @@ function renderMyVideoCard(video){
   console.log(video)
   const myVidTab = document.querySelector('#myVideoTab')
 
-      vidCard = document.createElement('div')
+      let vidCard = document.createElement('div')
       vidCard.id = `my-vid-card-${video.id}`
       vidCard.classList.add('vid-preview-card')
       myVidTab.appendChild(vidCard)
@@ -306,17 +316,21 @@ function renderMyVideoCard(video){
       })
       myVidTab.prepend(vidCard)
 
-      vidImg = document.createElement('img')
+      let vidImg = document.createElement('img')
       vidImg.src = `https://img.youtube.com/vi/${video.youtube_id}/1.jpg`
       vidCard.appendChild(vidImg)
 
-      vidTitle = document.createElement('div')
+      let vidDetails = document.createElement('div')
+      vidDetails.classList.add('vid-details')
+
+      let vidTitle = document.createElement('div')
       vidTitle.classList.add('vid-title')
       vidTitle.innerText = video.name
-      vidCard.appendChild(vidTitle)
+      vidDetails.appendChild(vidTitle)
 
-      vidDetails = document.createElement('p')
-      vidDetails.innerText = `Instructor: ${video.instructor}`
+      let vidInstructor = document.createElement('p')
+      vidInstructor.innerText = `Instructor: ${video.instructor}`
+      vidDetails.appendChild(vidInstructor)
       vidCard.appendChild(vidDetails)
 
       // vidAddBtn = document.createElement('div')
@@ -343,7 +357,7 @@ function removeFromMyList(event){
     video_id: videoId
   }
   // debugger
-  fetch(`http://localhost:3000/api/v1/users/${userId}/videos/remove`, {
+  fetch(USERSURL+`/${userId}/videos/remove`, {
     method: "DELETE",
     headers:{
       "Content-Type": "application/json",
@@ -381,7 +395,7 @@ function postNewVideo(){
                 category: vidCategory,
                 youtube_id: vidYoutubeId}
 
-  fetch('http://localhost:3000/api/v1/videos', {
+  fetch(VIDEOSURL, {
     method: 'POST',
     headers: {
         "Content-Type": "application/json",
@@ -422,7 +436,7 @@ function addNewNote(){
     'content': inputContent
   }
 
-  fetch('http://localhost:3000/api/v1/notes', {
+  fetch(NOTESURL, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
@@ -466,7 +480,7 @@ function getUserNotes(video) {
   console.log(video)
   const userId = welcomeDiv().id
   const videoId = video.id
-  fetch(`http://localhost:3000/api/v1/notes/${userId}/${videoId}`, {
+  fetch(NOTESURL+`/${userId}/${videoId}`, {
     method: 'GET',
     headers: {
       "Content-Type": "application/json",

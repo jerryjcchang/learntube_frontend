@@ -44,7 +44,7 @@ body {
 } */
 
 .videos-container{
-  height: 89vh;
+  height: 88vh;
   overflow-y: scroll;
 }
 
@@ -67,6 +67,10 @@ body {
   height: 65%;
   text-align: center;
   display: block;
+}
+
+.vid-details{
+  flex-direction: row;
 }
 
 .tab-spacer{
@@ -95,12 +99,14 @@ body {
 }
 
 .vid-preview-card{
+  /* display: inline-block; */
   width: 95%;
     padding: 12px;
     overflow: hidden;
   background-color: #ffffff;
   margin: 18px;
   border: .25px solid lightgrey;
+  height: 15%;
 
 }
 
@@ -215,12 +221,12 @@ body {
 }
 
 .vid-del-btn{
-  width: 20%;
-  margin-bottom: 0px;
-  margin-top: 10px;
+  width: 30%;
+  /* margin-bottom: 0px; */
+  /* margin-top: 10px; */
   background-color: #af4c4c;
   float: right;
-  vertical-align: top;
+  /* vertical-align: top; */
   color: white;
 }
 
@@ -234,7 +240,7 @@ body {
 }
 
 .vid-remove-btn{
-  width: 15%;
+  width: 20%;
   margin-bottom: 0px;
   margin-top: 10px;
   background-color: #af4c4c;
