@@ -47,7 +47,7 @@ body {
 
 .videos-container{
   height: 87vh;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 .vid-card {
@@ -74,6 +74,7 @@ body {
 .vid-details{
   flex-direction: row;
   width: 65%;
+  height: 100%;
 }
 
 .tab-spacer{
@@ -284,7 +285,7 @@ body {
 }
 
 .notes-content{
-  height: 100%;
+  height: 50%;
   overflow: scroll;
   text-align: left;
 }
