@@ -208,7 +208,7 @@ function renderVideoCard(video){
     addBtn = document.createElement('button')
     addBtn.classList.add('vid-add-btn', 'btn')
     addBtn.id = `add-btn-${video.id}`
-    addBtn.innerText = 'Add To My List'
+    addBtn.innerHTML = 'Add To My List'
     addBtn.addEventListener('click', function(e){
       e.stopPropagation()
       addToMyList(e)

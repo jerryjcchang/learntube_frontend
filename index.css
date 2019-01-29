@@ -44,7 +44,7 @@ body {
 } */
 
 .videos-container{
-  height: 88vh;
+  height: 87vh;
   overflow-y: scroll;
 }
 
@@ -222,7 +222,7 @@ body {
 }
 
 .vid-del-btn{
-  width: 14%;
+  width: 20%;
   /* margin-bottom: 0px; */
   /* margin-top: 10px; */
   background-color: #af4c4c;
@@ -238,11 +238,11 @@ body {
   float: right;
   vertical-align: top;
   color: white;
-  width: 14%;
+  width: 25%;
 }
 
 .vid-remove-btn{
-  width: 14%;
+  width: 25%;
   /* margin-bottom: 0px;
   margin-top: 10px; */
   background-color: #af4c4c;
