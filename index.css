@@ -44,7 +44,7 @@ body {
 } */
 
 .videos-container{
-  height: 88vh;
+  height: 87vh;
   overflow-y: scroll;
 }
 
@@ -71,6 +71,7 @@ body {
 
 .vid-details{
   flex-direction: row;
+  width: 65%;
 }
 
 .tab-spacer{
@@ -99,7 +100,7 @@ body {
 }
 
 .vid-preview-card{
-  /* display: inline-block; */
+  display: flex;
   width: 95%;
     padding: 12px;
     overflow: hidden;
@@ -122,12 +123,12 @@ body {
 }
 
 .vid-title {
-  display: inline-block;
+  /* display: inline-block; */
   font-size: 18px;
   font-weight: bolder;
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 50%;
+  /* width: 50%; */
 }
 
 .vid-preview-card p{
@@ -221,7 +222,7 @@ body {
 }
 
 .vid-del-btn{
-  width: 30%;
+  width: 20%;
   /* margin-bottom: 0px; */
   /* margin-top: 10px; */
   background-color: #af4c4c;
@@ -231,18 +232,19 @@ body {
 }
 
 .vid-add-btn{
-  margin-bottom: 0px;
-  margin-top: 10px;
+  /* margin-bottom: 0px; */
+  /* margin-top: 10px; */
   background-color: #027de7;
   float: right;
   vertical-align: top;
   color: white;
+  width: 25%;
 }
 
 .vid-remove-btn{
-  width: 20%;
-  margin-bottom: 0px;
-  margin-top: 10px;
+  width: 25%;
+  /* margin-bottom: 0px;
+  margin-top: 10px; */
   background-color: #af4c4c;
   float: right;
   vertical-align: top;
