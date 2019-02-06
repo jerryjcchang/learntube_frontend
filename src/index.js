@@ -166,6 +166,7 @@ function login(username){
   Promise.all([getUser(username), getAllVideos()])
   .then(r => {
     handleLogin(r[0])
+    console.log(r[1])
     r[1].forEach(video => renderVideoCard(video))
   })
   .then(renderDeleteButton)
@@ -180,6 +181,7 @@ function renderVideoCard(video){
     vidCard = document.createElement('div')
     vidCard.id = `vid-card-${video.id}`
     vidCard.classList.add('vid-preview-card', `${video.instructor.toLowerCase()}`)
+    // debugger
     modContainer.appendChild(vidCard)
 // COMMENT BACK IN TO ENABLE MODAL //
     vidCard.addEventListener('click', (e) => {
