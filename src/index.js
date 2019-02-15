@@ -136,8 +136,8 @@ function handleLogin(user){
     $('#invalid-user').hide() // hide bootstrap-alert after incorrect login
     if (user.status === 'instructor') {
       // console.log('is instructor')
-      document.getElementById('myVideoTab').classList.remove('show', 'active')
-      document.getElementById('addVideoTab').classList.add('show', 'active')
+      document.getElementById('myVideoTab').classList.remove('active', 'show')
+      document.getElementById('addVideoTab').classList.add('active', 'show')
       document.querySelector('.welcome-div').dataset.name = user.first_name.toLowerCase()
       document.getElementById('instructor').value = user.first_name
       closeModal();
@@ -251,6 +251,9 @@ function mod(){
 
   document.querySelector('#mod-4').classList.remove('d-none')
   document.querySelector('#mod4Tab').classList.remove('d-none')
+
+  document.querySelector('#mod-5').classList.remove('d-none')
+  document.querySelector('#mod5Tab').classList.remove('d-none')
 }
 
 function renderDeleteButton(){
