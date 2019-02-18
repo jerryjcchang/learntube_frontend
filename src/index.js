@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function onPlayerReady(event) {
     isReady = true;
-    console.log(event)
   }
 
   function videoLoaded (){
@@ -27,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
         clearInterval(interval);
     }
   }
+
+  createPlayer()
 
   let loginForm = document.querySelector('.login-form')
   loginForm.addEventListener('submit', function(e){
@@ -63,16 +64,30 @@ const NOTESURL = BASEURL+'/notes'
 
 var player
 
-function onYouTubeIframeAPIReady() {
-  let player = new YT.Player('player', {
+function onYouTubeIframeAPIReady(id) {
+  player = new YT.Player('player', {
     height: '100%',
     width: '100%',
+    videoId: id,
     playerVars: {rel: 0, showinfo: 0, ecver: 2},
     events: {
-      'onReady': onPlayerReady,
+      // 'onReady': onPlayerReady,
       // 'onStateChange': onPlayerStateChange
     }
   });
+}
+
+function createPlayer(){
+player = new YT.Player('player', {
+  height: '100%',
+  width: '100%',
+  videoId: "",
+  playerVars: {rel: 0, showinfo: 0, ecver: 2},
+  events: {
+    // 'onReady': onPlayerReady,
+    // 'onStateChange': onPlayerStateChange
+  }
+});
 }
 
 function welcomeDiv(){
@@ -166,7 +181,7 @@ function login(username){
   Promise.all([getUser(username), getAllVideos()])
   .then(r => {
     handleLogin(r[0])
-    // console.log(r[1])
+    console.log(r[1])
     r[1].forEach(video => renderVideoCard(video))
   })
   .then(renderDeleteButton)
@@ -499,7 +514,6 @@ function getUserNotes(video) {
 }
 
 function handleCardClick(video){
-  debugger
   // let modalContent = document.querySelector('.video-modal')
   modal().style.display = "block"
   // modalContent.src = `http://www.youtube.com/embed/${video.youtube_id}`
