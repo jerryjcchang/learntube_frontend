@@ -171,7 +171,6 @@ body {
 .modal-container {
   display: flex;
   flex-direction: column;
-  body: black;
   border-radius: 10px;
   background-color: #232323;
   margin: auto;
