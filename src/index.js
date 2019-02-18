@@ -66,13 +66,14 @@ function onYouTubeIframeAPIReady(id) {
   player = new YT.Player('player', {
     height: '100%',
     width: '100%',
-    videoId: id,
+    videoId: 'M7lc1UVf-VE',
     playerVars: {rel: 0, showinfo: 0, ecver: 2},
     events: {
       // 'onReady': onPlayerReady,
       // 'onStateChange': onPlayerStateChange
     }
   });
+  debugger
 }
 
 function welcomeDiv(){
