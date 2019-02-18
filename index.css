@@ -22,7 +22,7 @@ body {
   margin: 0;
   /*margin-top: 8rem;*/
   margin-bottom: 30px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 13px;
   line-height: 18px;
   /* background-image: url("https://i.pinimg.com/originals/2e/f2/54/2ef25428d39b940685fe41dd73173f6a.jpg"); */
@@ -54,7 +54,10 @@ body {
   width: 100%;
 } */
 
-
+.btn {
+  font-size: 1vw;
+  /* width: 3vw; */
+}
 
 .videos-container{
   height: 87vh;
@@ -86,6 +89,7 @@ body {
   flex-direction: row;
   width: 65%;
   height: 100%;
+  font-size: 1.2vw;
 }
 
 .tab-spacer{
@@ -115,13 +119,14 @@ body {
 
 .vid-preview-card{
   display: flex;
-  width: 95%;
+  width: 100%;
     padding: 12px;
     overflow: hidden;
   background-color: #ffffff;
-  margin: 18px;
+  margin-top: 10px;
   border: .25px solid lightgrey;
   height: 15%;
+  max-height: 15%
 
 }
 
@@ -138,17 +143,21 @@ body {
 
 .vid-title {
   /* display: inline-block; */
-  font-size: 18px;
+  font-size: 1.3vw;
   font-weight: bolder;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0px;
+  margin-bottom: 3px;
+  margin-right: 5px;
+  line-height: 1.5vw;
   /* width: 50%; */
 }
 
 .vid-preview-card p{
   display: inline-block;
-  font-size: 15px;
+  font-size: .85vw;
   width: 50%;
+  color: #a7a7a7;
+  max-height: 2vh;
 }
 
 
@@ -245,7 +254,7 @@ body {
   float: right;
   /* vertical-align: top; */
   color: white;
-  max-height: 40px;
+  /* max-height: 40px; */
 }
 
 .vid-add-btn{
@@ -271,12 +280,14 @@ body {
 .btn-primary{
   background-color: #484b4c;
   border-color: #484b4c;
+  width: 8vw;
 }
 
 .welcome-div{
   /*float: right;*/
   font-size: 20px;
   color: lightgrey;
+  font-family: 'Robot', sans-serif;
 /*  margin-top: 8px;*/
 }
 
