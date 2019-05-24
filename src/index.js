@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+  createPlayer()
+
   function onPlayerReady(event) {
     isReady = true;
   }
@@ -27,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // createPlayer()
 
   let loginForm = document.querySelector('.login-form')
   loginForm.addEventListener('submit', function(e){
@@ -62,6 +63,29 @@ const USERSURL = BASEURL+'/users'
 const VIDEOSURL = BASEURL+'/videos'
 const NOTESURL = BASEURL+'/notes'
 
+//get nodes
+
+function welcomeDiv(){
+  return document.querySelector('.welcome-div')
+}
+
+function modal(){
+  return document.querySelector('#video-modal')
+}
+
+function modalXButton(){
+  return document.getElementsByClassName("close")[0]
+}
+
+function notesContentDiv(){
+  return document.querySelector('.notes-content')
+}
+
+function initModalXButton(){
+  modalXButton().addEventListener('click', handleXButton)
+}
+
+
 var player
 
 function onYouTubeIframeAPIReady(id) {
@@ -90,25 +114,6 @@ player = new YT.Player('player', {
 });
 }
 
-function welcomeDiv(){
-  return document.querySelector('.welcome-div')
-}
-
-function modal(){
-  return document.querySelector('#video-modal')
-}
-
-function modalXButton(){
-  return document.getElementsByClassName("close")[0]
-}
-
-function notesContentDiv(){
-  return document.querySelector('.notes-content')
-}
-
-function initModalXButton(){
-  modalXButton().addEventListener('click', handleXButton)
-}
 
 function clearNotes(){
   clearChildNodes(notesContentDiv())
@@ -486,6 +491,8 @@ function renderNote(note){
 
   let noteHeader = document.createElement('header')
   noteHeader.innerText = note.timestamp
+  noteHeader.id = `note-${note.id}`
+  noteHeader.classList.add('timestamp')
   noteDiv.appendChild(noteHeader)
 
   let noteText = document.createElement('p')

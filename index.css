@@ -39,7 +39,7 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px lightgrey; 
+  box-shadow: inset 0 0 5px lightgrey;
   border-radius: 10px;
 }
 
@@ -80,7 +80,7 @@ body {
 
 #video-container{
   width: 100%;
-  height: 65%;
+  height: 60%;
   text-align: center;
   display: block;
 }
@@ -163,10 +163,11 @@ body {
 
 /* The Modal (background) */
 .modal2 {
-  display: none; /* Hidden by default */
+  display: none;
+  /* margin-top: 2vh;/* Hidden by default */ */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 2vh; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -183,11 +184,27 @@ body {
   body: black;
   border-radius: 10px;
   background-color: #232323;
+  border-color: grey;
+  border-style: solid;
+  border-width: .5px;
   margin: auto;
   padding: 20px;
   /* border: 1px solid #888; */
-  width: 75%;
-  height: 80%;
+  width: 50%;
+  height: 85%;
+}
+
+#note-form {
+  width: 98%;
+  padding: auto;
+}
+
+#add-note-btn {
+  height: 100%;
+}
+
+.timestamp {
+  font-size: 1.5vh;
 }
 
 .video-header-div {
@@ -224,7 +241,7 @@ body {
 }
 
 .vid-notes-div {
-  margin-top: 15px;
+  margin-top: 10px;
   /* border-bottom: 2px solid lightgrey; */
   width: 50%;
   display: inline-block;
@@ -311,7 +328,7 @@ body {
 
 .notes-content{
   height: 50%;
-  overflow: scroll;
+  overflow-y: scroll;
   text-align: left;
 }
 
