@@ -102,6 +102,7 @@ var player
 // }
 
 function createPlayer(){
+  if((typeof YT !== "undefined") && YT && YT.Player){
   player = new YT.Player('player', {
   height: '100%',
   width: '100%',
@@ -110,6 +111,8 @@ function createPlayer(){
   events: {
     // 'onReady': onPlayerReady,
     // 'onStateChange': onPlayerStateChange
+  } else {
+    setTimeout(createPlayer, 100);
   }
 });
 }
