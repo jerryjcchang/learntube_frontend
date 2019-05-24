@@ -103,20 +103,21 @@ var player
 
 function createPlayer(){
   if((typeof YT !== "undefined") && YT && YT.Player){
-    player = new YT.Player('player', {
-    height: '100%',
-    width: '100%',
-    videoId: "",
-    playerVars: {rel: 0, showinfo: 0, ecver: 2},
-    events: {
-      // 'onReady': onPlayerReady,
-      // 'onStateChange': onPlayerStateChange
-    }
-  }else {
+      let configObj = {
+      height: '100%',
+      width: '100%',
+      videoId: "",
+      playerVars: {rel: 0, showinfo: 0, ecver: 2},
+      events: {
+        // 'onReady': onPlayerReady,
+        // 'onStateChange': onPlayerStateChange
+        }
+      }
+    player = new YT.Player('player', configObj)
+  } else {
     setTimeout(createPlayer, 100);
   }
-});
-}
+};
 
 
 function clearNotes(){
