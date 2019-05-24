@@ -12,22 +12,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
   createPlayer()
 
-  function onPlayerReady(event) {
-    isReady = true;
-  }
+  // function onPlayerReady(event) {
+  //   isReady = true;
+  // }
 
-  function videoLoaded (){
-    if (isReady) {
-        // console.log("ready and play")
-        poster.hide();
-        video.show();
-
-        $('body').trigger('fluidvideos');
-
-        player.playVideo();
-        clearInterval(interval);
-    }
-  }
+  // function videoLoaded (){
+  //   if (isReady) {
+  //       // console.log("ready and play")
+  //       poster.hide();
+  //       video.show();
+  //
+  //       $('body').trigger('fluidvideos');
+  //
+  //       player.playVideo();
+  //       clearInterval(interval);
+  //   }
+  // }
 
 
   let loginForm = document.querySelector('.login-form')
@@ -88,21 +88,21 @@ function initModalXButton(){
 
 var player
 
-function onYouTubeIframeAPIReady(id) {
-  player = new YT.Player('player', {
-    height: '100%',
-    width: '100%',
-    videoId: id,
-    playerVars: {rel: 0, showinfo: 0, ecver: 2},
-    events: {
-      // 'onReady': onPlayerReady,
-      // 'onStateChange': onPlayerStateChange
-    }
-  });
-}
+// function onYouTubeIframeAPIReady(id) {
+//   player = new YT.Player('player', {
+//     height: '100%',
+//     width: '100%',
+//     videoId: id,
+//     playerVars: {rel: 0, showinfo: 0, ecver: 2},
+//     events: {
+//       // 'onReady': onPlayerReady,
+//       // 'onStateChange': onPlayerStateChange
+//     }
+//   });
+// }
 
 function createPlayer(){
-player = new YT.Player('player', {
+  player = new YT.Player('player', {
   height: '100%',
   width: '100%',
   videoId: "",
