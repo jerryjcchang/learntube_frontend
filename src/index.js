@@ -103,15 +103,16 @@ var player
 
 function createPlayer(){
   if((typeof YT !== "undefined") && YT && YT.Player){
-  player = new YT.Player('player', {
-  height: '100%',
-  width: '100%',
-  videoId: "",
-  playerVars: {rel: 0, showinfo: 0, ecver: 2},
-  events: {
-    // 'onReady': onPlayerReady,
-    // 'onStateChange': onPlayerStateChange
-  } else {
+    player = new YT.Player('player', {
+    height: '100%',
+    width: '100%',
+    videoId: "",
+    playerVars: {rel: 0, showinfo: 0, ecver: 2},
+    events: {
+      // 'onReady': onPlayerReady,
+      // 'onStateChange': onPlayerStateChange
+    }
+  }else {
     setTimeout(createPlayer, 100);
   }
 });
