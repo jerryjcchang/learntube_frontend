@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 })
 
-// const BASEURL = 'https://learntube-backend.herokuapp.com/api/v1'
-const BASEURL = 'http://localhost:3000/api/v1'
+const BASEURL = 'https://learntube-backend.herokuapp.com/api/v1'
+// const BASEURL = 'http://localhost:3000/api/v1'
 const USERSURL = BASEURL+'/users'
 const VIDEOSURL = BASEURL+'/videos'
 const NOTESURL = BASEURL+'/notes'
