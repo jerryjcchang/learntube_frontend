@@ -248,7 +248,8 @@ body {
 }
 
 .tab-pane {
-  height: 85vh;
+  height: 80vh;
+  padding-bottom: 1vh;
 }
 
 

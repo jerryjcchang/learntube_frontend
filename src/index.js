@@ -12,23 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   createPlayer()
 
-  // function onPlayerReady(event) {
-  //   isReady = true;
-  // }
-
-  // function videoLoaded (){
-  //   if (isReady) {
-  //       // console.log("ready and play")
-  //       poster.hide();
-  //       video.show();
-  //
-  //       $('body').trigger('fluidvideos');
-  //
-  //       player.playVideo();
-  //       clearInterval(interval);
-  //   }
-  // }
-
 
   let loginForm = document.querySelector('.login-form')
   loginForm.addEventListener('submit', function(e){
@@ -58,7 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 })
 
-const BASEURL = 'https://learntube-backend.herokuapp.com/api/v1'
+// const BASEURL = 'https://learntube-backend.herokuapp.com/api/v1'
+const BASEURL = 'http://localhost:3000/api/v1'
 const USERSURL = BASEURL+'/users'
 const VIDEOSURL = BASEURL+'/videos'
 const NOTESURL = BASEURL+'/notes'
@@ -201,7 +185,7 @@ function renderVideoCard(video){
   // take each video, filter by Category
   // set tabId based on category
   // render video divs to category
-  let modContainer = document.querySelector(`#${video.category.replace(/\s/g, '').toLowerCase()}Tab`);
+  let modContainer = document.querySelector(`#${video.category.replace(/\s/g, '-').toLowerCase()}-tab`);
     // debugger
     vidCard = document.createElement('div')
     vidCard.id = `vid-card-${video.id}`
@@ -266,19 +250,19 @@ function renderUserLikedVideos(user){
 
 function mod(){
   document.querySelector('#mod-1').classList.remove('d-none')
-  document.querySelector('#mod1Tab').classList.remove('d-none')
+  document.querySelector('#mod-1-tab').classList.remove('d-none')
 
   document.querySelector('#mod-2').classList.remove('d-none')
-  document.querySelector('#mod2Tab').classList.remove('d-none')
+  document.querySelector('#mod-2-tab').classList.remove('d-none')
 
   document.querySelector('#mod-3').classList.remove('d-none')
-  document.querySelector('#mod3Tab').classList.remove('d-none')
+  document.querySelector('#mod-3-tab').classList.remove('d-none')
 
   document.querySelector('#mod-4').classList.remove('d-none')
-  document.querySelector('#mod4Tab').classList.remove('d-none')
+  document.querySelector('#mod-4-tab').classList.remove('d-none')
 
   document.querySelector('#mod-5').classList.remove('d-none')
-  document.querySelector('#mod5Tab').classList.remove('d-none')
+  document.querySelector('#mod-5-tab').classList.remove('d-none')
 }
 
 function renderDeleteButton(){
@@ -437,7 +421,21 @@ function postNewVideo(){
   .then((newVideo) => {
     renderVideoCard(newVideo)
     renderDeleteBtn(newVideo.id)
+    toggleActive(newVideo.category)
   })
+}
+
+function toggleActive(category){
+  let activeTab = document.querySelector('.active.show')
+  let activePane = document.getElementById("myTabContent").querySelector(".active.show")
+  let id = category.replace(/\s+/g, '-').toLowerCase()
+  let newActiveTab = document.getElementById(id)
+  let newActivePane = document.getElementById(`${id}-tab`)
+  if(activeTab.innerText === category) return
+  activeTab.classList.remove('active', 'show')
+  activePane.classList.remove('active', 'show')
+  newActiveTab.classList.add('active', 'show')
+  newActivePane.classList.add('active', 'show')
 }
 
 function renderDeleteBtn(id){
