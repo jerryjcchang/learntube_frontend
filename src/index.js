@@ -175,7 +175,7 @@ function login(username){
   Promise.all([getUser(username), getAllVideos()])
   .then(r => {
     handleLogin(r[0])
-    console.log(r[1])
+    // console.log(r[1])
     r[1].forEach(video => renderVideoCard(video))
   })
   .then(renderDeleteButton)
